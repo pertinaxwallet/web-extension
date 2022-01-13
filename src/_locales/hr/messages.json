@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Perpitax novčanik za Eversale Blockchain"
+  },
+  "extShortName": {
+    "message": "Perpitax novčanik"
+  },
+  "extDescription": {
+    "message": "Perntinax novčanik za Eversale Blockchain omogućuje stvaranje novih računa, napravite sigurnosne kopije, obnovite ih, pošaljite transakcije, koriste Dapp i još mnogo toga."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transakcija je potvrđena"
+  }
+}

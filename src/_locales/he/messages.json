@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "ארנק Pertinax עבור Everscale Blockchain שלי"
+  },
+  "extShortName": {
+    "message": "ארנק Pertinax"
+  },
+  "extDescription": {
+    "message": "Pertinax ארנק עבור Everscale Blockchain מאפשר לך ליצור חשבונות חדשים, לבצע גיבויים, לשחזר אותם, לשלוח עסקאות, להשתמש DAPP ועוד."
+  },
+  "TransactionIsConfirmed": {
+    "message": "העסקה אושרה"
+  }
+}

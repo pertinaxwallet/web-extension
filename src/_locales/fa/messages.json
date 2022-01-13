@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "کیف پول Pertinax برای Blockchain Everscale"
+  },
+  "extShortName": {
+    "message": "کیف پول Pertinax"
+  },
+  "extDescription": {
+    "message": "کیف پول Pertinax برای Everscale Blockchain اجازه می دهد تا شما را به ایجاد حساب های جدید، پشتیبان گیری، بازگرداندن آنها، ارسال معاملات، استفاده از DAPP و خیلی بیشتر."
+  },
+  "TransactionIsConfirmed": {
+    "message": "معامله تایید شده است"
+  }
+}

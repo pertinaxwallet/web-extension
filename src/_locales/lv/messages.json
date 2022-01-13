@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax maku Everscale BlockChain"
+  },
+  "extShortName": {
+    "message": "Pertinax maku"
+  },
+  "extDescription": {
+    "message": "Pertinax maku Everscale BlockChain ļauj izveidot jaunus kontus, veikt backups, atjaunot tos, nosūtīt darījumus, izmantot DAP un daudz ko citu."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Darījums tiek apstiprināts"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax plånbok för Evercale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax plånbok."
+  },
+  "extDescription": {
+    "message": "Pertinax plånbok för Evercale Blockchain Gör det möjligt att skapa nya konton, göra säkerhetskopior, återställa dem, skicka transaktioner, använda DAPP och mycket mer."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transaktionen är bekräftad"
+  }
+}

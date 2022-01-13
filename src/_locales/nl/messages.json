@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax portemonnee voor Everscale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax portemonnee"
+  },
+  "extDescription": {
+    "message": "Met pertinax portemonnee voor Everscale Blockchain kunt u nieuwe accounts maken, back-ups maken, ze herstellen, transacties verzenden, DAPP gebruiken en nog veel meer."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transactie is bevestigd"
+  }
+}

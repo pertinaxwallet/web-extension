@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax dompet untuk blockchain Everscale"
+  },
+  "extShortName": {
+    "message": "Pertinax dompet"
+  },
+  "extDescription": {
+    "message": "Pertinax Wallet untuk blockchain Everscale memungkinkan Anda untuk membuat akun baru, membuat cadangan, mengembalikannya, mengirim transaksi, menggunakan DAPP dan banyak lagi."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transaksi dikonfirmasi"
+  }
+}

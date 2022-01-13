@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax piniginė Everscale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax piniginė."
+  },
+  "extDescription": {
+    "message": "Everscale Blockchain perintax piniginė leidžia kurti naujas sąskaitas, padaryti atsargines kopijas, atkurti juos, siųsti sandorius, naudokite DAPP ir daug daugiau."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Sandoris patvirtinamas"
+  }
+}

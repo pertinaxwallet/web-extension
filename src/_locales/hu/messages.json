@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax pénztárca Everscale Blockchain számára"
+  },
+  "extShortName": {
+    "message": "Pertinax pénztárca"
+  },
+  "extDescription": {
+    "message": "Pertinax tárca Everscale blockchain lehetővé teszi, hogy hozzon létre új fiókokat, hogy a mentést, állítsa vissza őket, send ügyletek felhasználása DAPP és még sok más."
+  },
+  "TransactionIsConfirmed": {
+    "message": "A tranzakció megerősítése"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Пертинакс новчаник за Everscale blockchain"
+  },
+  "extShortName": {
+    "message": "Пертинакс новчаник."
+  },
+  "extDescription": {
+    "message": "Новчаник Пертинакс за Everscale blockchain омогућава вам да креирате нове рачуне, направите сигурносне копије, вратите их, пошаљите трансакције, користите Дапп и још много тога."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Трансакција је потврђена"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Everscale Blockchain க்கான Pertinax wallet"
+  },
+  "extShortName": {
+    "message": "Pertinax wallet."
+  },
+  "extDescription": {
+    "message": "Everscale Blockchain க்கான Pertinax wallet நீங்கள் புதிய கணக்குகளை உருவாக்க அனுமதிக்கிறது, காப்புப்பிரதிகள் செய்ய, அவற்றை மீட்டெடுக்க, பரிவர்த்தனைகள் அனுப்ப, டாப் மற்றும் மிகவும் பயன்படுத்த."
+  },
+  "TransactionIsConfirmed": {
+    "message": "பரிவர்த்தனை உறுதிப்படுத்தப்பட்டுள்ளது"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "పెర్టినాక్స్ వాలెట్ కోసం Pertinax Wallet్"
+  },
+  "extShortName": {
+    "message": "పెర్టినాక్స్ వాలెట్."
+  },
+  "extDescription": {
+    "message": "Everscale Blockchain కోసం పెర్టినాక్స్ వాలెట్ మీరు కొత్త ఖాతాలను సృష్టించడానికి, బ్యాకప్లు తయారు, వాటిని పునరుద్ధరించడానికి, లావాదేవీలు పంపండి, డాప్ మరియు మరింత ఎక్కువ."
+  },
+  "TransactionIsConfirmed": {
+    "message": "లావాదేవీ నిర్ధారించబడింది"
+  }
+}

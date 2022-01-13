@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax πορτοφόλι για blockchain everscale"
+  },
+  "extShortName": {
+    "message": "Pertinax πορτοφόλι"
+  },
+  "extDescription": {
+    "message": "Το Pertinax Πορτοφόλι για Blockchain Everscale σάς επιτρέπει να δημιουργείτε νέους λογαριασμούς, να κάνετε αντίγραφα ασφαλείας, να τα αποκαταστήσετε, να στείλετε συναλλαγές, να χρησιμοποιήσετε dapp και πολλά άλλα."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Η συναλλαγή επιβεβαιώνεται"
+  }
+}

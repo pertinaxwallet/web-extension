@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Everscale blockchain साठी pertinax वॉलेट"
+  },
+  "extShortName": {
+    "message": "सुरक्षित विनामूल्य टॉन वॉलेट."
+  },
+  "extDescription": {
+    "message": "Everscale Blockchain साठी pertinax वॉलेट आपल्याला नवीन खाती तयार करण्यास, बॅकअप तयार करण्यास, त्यांना पुनर्संचयित करण्यास, व्यवहार पाठवा, डीएपी वापरा आणि बरेच काही."
+  },
+  "TransactionIsConfirmed": {
+    "message": "व्यवहार पुष्टी आहे"
+  }
+}

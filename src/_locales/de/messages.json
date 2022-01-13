@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax Brieftasche für Everscale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax Brieftasche"
+  },
+  "extDescription": {
+    "message": "Mit der Pertinax-Brieftasche für Everscale Blockchain können Sie neue Konten erstellen, Backups erstellen, wiederherstellen, Transaktionen senden, DAPP und vieles mehr verwenden."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transaktion wird bestätigt"
+  }
+}

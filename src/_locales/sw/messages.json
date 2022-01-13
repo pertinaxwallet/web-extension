@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax Wallet kwa Everscale Blockchain."
+  },
+  "extShortName": {
+    "message": "Pertinax Wallet."
+  },
+  "extDescription": {
+    "message": "Pertinax Wallet kwa Everscale Blockchain inakuwezesha kuunda akaunti mpya, kufanya backups, kurejesha, kutuma shughuli, kutumia DAP na mengi zaidi."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Shughuli imethibitishwa."
+  }
+}

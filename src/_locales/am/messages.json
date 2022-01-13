@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "ፔርትኒናክ ዋልታ ዋልታ ዋልታ"
+  },
+  "extShortName": {
+    "message": "ፔርትኒናክ የኪስ ቦርሳ ለ የማያቋርጥ blockchain"
+  },
+  "extDescription": {
+    "message": "ፔርትኒካል ዋልታ ዋልታል ዋልታኒል ዋልታሪቲን አዲስ መለያዎችን እንዲፈጥሩ, ምትኬዎችን ያካሂዱ, ግብይቶችን ይልኩ, ግብይቶችን ይጠቀሙ, DAPP ን እና ብዙ ተጨማሪ."
+  },
+  "TransactionIsConfirmed": {
+    "message": "ግብይት ተረጋግ ል"
+  }
+}

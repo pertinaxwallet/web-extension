@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "everscale區塊鏈的Pertinax錢包"
+  },
+  "extShortName": {
+    "message": "pertinax錢包"
+  },
+  "extDescription": {
+    "message": "everscale區塊鏈的Pertinax錢包允許您創建新帳戶，備份，恢復它們，發送事務，使用DAPP等等。"
+  },
+  "TransactionIsConfirmed": {
+    "message": "交易已確認"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Carteira pertinax para blockchain evererscale"
+  },
+  "extShortName": {
+    "message": "Carteira pertinax."
+  },
+  "extDescription": {
+    "message": "Pertinax carteira para Evererscale Blockchain permite que você crie novas contas, faça backups, restaurá-los, envie transações, use Dapp e muito mais."
+  },
+  "TransactionIsConfirmed": {
+    "message": "A transação é confirmada"
+  }
+}

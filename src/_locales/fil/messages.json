@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax wallet para sa everscale blockchain."
+  },
+  "extShortName": {
+    "message": "Pertinax wallet."
+  },
+  "extDescription": {
+    "message": "Ang Pertinax Wallet para sa Everscale Blockchain ay nagbibigay-daan sa iyo upang lumikha ng mga bagong account, gumawa ng mga backup, ibalik ang mga ito, magpadala ng mga transaksyon, gamitin ang DApp at marami pang iba."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Nakumpirma ang transaksyon"
+  }
+}

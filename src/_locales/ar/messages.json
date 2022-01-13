@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "محفظة بورتينكس لخلفها"
+  },
+  "extShortName": {
+    "message": "بورتينكس المحفظة"
+  },
+  "extDescription": {
+    "message": "يسمح لك Pertinax Wallet for Lidscale Blockchain بإنشاء حسابات جديدة، وجعل النسخ الاحتياطية، واستعادةها، وإرسال المعاملات، واستخدام Dapp وغير ذلك الكثير."
+  },
+  "TransactionIsConfirmed": {
+    "message": "تم تأكيد المعاملة"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax Wallet for Everscale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax Wallet."
+  },
+  "extDescription": {
+    "message": "Pertinax Wallet for Everscale Blockchain lar deg lage nye kontoer, lage sikkerhetskopier, gjenopprette dem, sende transaksjoner, bruk Dapp og mye mer."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transaksjonen er bekreftet"
+  }
+}

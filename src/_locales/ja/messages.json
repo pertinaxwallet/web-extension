@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "everscaleブロックチェーンのPertinax財布"
+  },
+  "extShortName": {
+    "message": "Pertinax財布"
+  },
+  "extDescription": {
+    "message": "Everscale Blockchain用のPertinax Walletを使用すると、新しいアカウントを作成し、バックアップを作成し、それらの復元、トランザクションの送信、DAPPの使用などを使用できます。"
+  },
+  "TransactionIsConfirmed": {
+    "message": "取引が確認されています"
+  }
+}

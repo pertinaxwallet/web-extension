@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax Lompakko Everscale Blockchainille"
+  },
+  "extShortName": {
+    "message": "Per perinax lompakko"
+  },
+  "extDescription": {
+    "message": "Pertinax-lompakko Everscale BlockChainin avulla voit luoda uusia tilejä, tehdä varmuuskopioita, palauttaa ne, lähettää tapahtumia, käyttää DApp: tä ja paljon muuta."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Kauppa vahvistetaan"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax portofel pentru Blockchain Everscale"
+  },
+  "extShortName": {
+    "message": "Pertinax portofel"
+  },
+  "extDescription": {
+    "message": "Pertinax portofel pentru Blockchainul EversCale vă permite să creați conturi noi, să faceți backup-uri, să le restabiliți, să trimiteți tranzacții, utilizați DAPP și multe altele."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Tranzacția este confirmată"
+  }
+}

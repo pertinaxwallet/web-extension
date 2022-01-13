@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Пертинакс портфейл за Blockchain на Everscale"
+  },
+  "extShortName": {
+    "message": "Пертинакс портфейл."
+  },
+  "extDescription": {
+    "message": "Пертинакс портфейл за Blockchain на Everscale ви позволява да създавате нови сметки, да направите резервни копия, да ги възстановите, да изпращате транзакции, да използвате DAPP и много други."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Транзакцията се потвърждава"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax wallet untuk ​​Everscale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax wallet."
+  },
+  "extDescription": {
+    "message": "Pertinax wallet untuk ​​Everscale Blockchain membolehkan anda membuat akaun baru, membuat sandaran, memulihkannya, menghantar transaksi, menggunakan DAPP dan banyak lagi."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Urus niaga disahkan"
+  }
+}

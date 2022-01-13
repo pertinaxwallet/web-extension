@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Perktinax rahakott Everscale Blockchaini jaoks"
+  },
+  "extShortName": {
+    "message": "Pertinax rahakott"
+  },
+  "extDescription": {
+    "message": "Pertinax rahakott Everscale Blockchain võimaldab teil luua uusi kontosid, teha varukoopiaid, taastada need, saadate tehinguid, kasutage DAPP ja palju muud."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Tehing kinnitatakse"
+  }
+}

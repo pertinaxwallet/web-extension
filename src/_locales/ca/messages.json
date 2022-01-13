@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Cartera pertinax per a salts d'everscale"
+  },
+  "extShortName": {
+    "message": "Cartera pertinax"
+  },
+  "extDescription": {
+    "message": "La cartera Pertinax per a Everscale Blockchain us permet crear nous comptes, fer còpies de seguretat, restaurar-les, enviar transaccions, utilitzar Dapp i molt més."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Es confirma la transacció"
+  }
+}

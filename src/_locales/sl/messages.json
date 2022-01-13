@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax Denarnica za Eversale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax denarnico."
+  },
+  "extDescription": {
+    "message": "Pertinax denarnico za Everscale Blockchain vam omogoča, da ustvarite nove račune, da varnostne kopije, obnovite, pošiljanje transakcij, uporabite DAPP in še veliko več."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transakcija je potrjena"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Everscale blockchain জন্য pertinax ওয়ালেট"
+  },
+  "extShortName": {
+    "message": "pertinax ওয়ালেট"
+  },
+  "extDescription": {
+    "message": "Everscale BlockChain এর জন্য Pertinax ওয়ালেট আপনাকে নতুন অ্যাকাউন্ট তৈরি করতে, ব্যাকআপগুলি তৈরি করতে, তাদের পুনরুদ্ধার করতে, লেনদেন পাঠাতে, ড্যাপ ব্যবহার করতে দেয়।"
+  },
+  "TransactionIsConfirmed": {
+    "message": "লেনদেন নিশ্চিত করা হয়"
+  }
+}

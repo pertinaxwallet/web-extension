@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Гаманець Pertinax для Everscale blockchain"
+  },
+  "extShortName": {
+    "message": "Гаманець Pertinax"
+  },
+  "extDescription": {
+    "message": "Гаманець Pertinax для Everscale Blockchain дозволяє створювати нові облікові записи, зробити резервні копії, відновити їх, надсилати транзакції, використовувати DAPP та багато іншого."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Транзакція підтверджена"
+  }
+}

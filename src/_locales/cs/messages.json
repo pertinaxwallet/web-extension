@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Pertinax Peněženka pro Everscale Blockchain"
+  },
+  "extShortName": {
+    "message": "Pertinax peněženka"
+  },
+  "extDescription": {
+    "message": "Pertinax peněženka pro Everscale Blockchain umožňuje vytvářet nové účty, vytvořit zálohy, obnovit je, odesílat transakce, používat dapp a mnoho dalšího."
+  },
+  "TransactionIsConfirmed": {
+    "message": "Transakce je potvrzena"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Evercale Blockchain için Pertinax Cüzdanı"
+  },
+  "extShortName": {
+    "message": "Pertinax cüzdanı"
+  },
+  "extDescription": {
+    "message": "Evercale Blockchain için Pertinax Cüzdanı, yeni hesaplar oluşturmanıza, yedeklemeleri, geri yüklemenizi, işlemleri göndermenize, Dapp'ı ve çok daha fazlasını kullanmanızı sağlar."
+  },
+  "TransactionIsConfirmed": {
+    "message": "İşlem onaylandı"
+  }
+}
