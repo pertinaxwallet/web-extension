@@ -6,7 +6,7 @@
     "message": "Pertinax wallet."
   },
   "extDescription": {
-    "message": "Pertinax wallet for Everscale blockchain allows you to create new accounts, make backups, restore them, send transactions, use DApp and much more."
+    "message": "Pertinax wallet for Everscale allows you to create new accounts, make backups, restore them, send transactions, use DApp, etc."
   },
   "TransactionIsConfirmed": {
     "message": "Transaction is confirmed"
