@@ -132,12 +132,11 @@
       return;
     }
     const maxBalance = $currentAccount.balance[$currentNetwork.server]
-                        ? $currentAccount.balance[$currentNetwork.server]
-                        : 0;
-    if (new BigNumber(toNano(amount.value)).gt(maxBalance)) {
-      errorAmount = "Amount can't be more than you have";
-      disabled = true;
-      return;
+      ? $currentAccount.balance[$currentNetwork.server]
+      : 0;
+    if (!allBalance && new BigNumber(toNano(amount.value)).gt(maxBalance)) {
+      allBalance = true;
+      amount.value = fromNano(maxBalance);
     }
     browser.runtime
       .sendMessage({
@@ -157,15 +156,25 @@
         },
       })
       .then((result) => {
-        fee = result.error || typeof result.fee == "undefined" ? 0 : fromNano(result.fee.total_account_fees);
+        fee =
+          result.error || typeof result.fee == "undefined"
+            ? 0
+            : fromNano(result.fee.total_account_fees);
+        const maxBalance = $currentAccount.balance[$currentNetwork.server]
+          ? $currentAccount.balance[$currentNetwork.server]
+          : 0;
         if (allBalance) {
-          const maxBalance = $currentAccount.balance[$currentNetwork.server]
-            ? $currentAccount.balance[$currentNetwork.server]
-            : 0;
           amount.value = fromNano(maxBalance - toNano(fee));
           total = fromNano(maxBalance);
         } else {
-          total = fromNano(toNano(amount.value) + toNano(fee));
+          if (
+            new BigNumber(toNano(amount.value) + toNano(fee)).gt(maxBalance)
+          ) {
+            amount.value = fromNano(maxBalance - toNano(fee));
+            total = fromNano(maxBalance);
+          } else {
+            total = fromNano(toNano(amount.value) + toNano(fee));
+          }
         }
         if (fee == 0) {
           disabled = true;
@@ -242,7 +251,10 @@
       on:clear={validateAddressSelect}
       on:keyup={validateAddress} />
   </Field>
-  <Field label={$_('Amount')} gapless error={typeof errorAmount === 'string' ? $_(errorAmount): false}>
+  <Field
+    label={$_('Amount')}
+    gapless
+    error={typeof errorAmount === 'string' ? $_(errorAmount) : false}>
     <Button on:click={() => setMax()} outline>{$_('Max')}</Button>
     <Input
       required
