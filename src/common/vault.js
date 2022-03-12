@@ -35,7 +35,7 @@ export class Vault {
           createdDate: 123123,
           contactList: {"main.ton.dev": ["0:11", "0:12"]},
           contractList: {"main.ton.dev": ["0:21", "0:22"]},
-          tokenList: {"main.ton.dev": ["0:31", "0:32"]},
+          tokenList: {"main.ton.dev": [{"address": "0:31"}, {"address": "0:32"}]},
           deployed: [], // server list on which was deployed
           encrypted: { //this object is encrypted
             privKey: "e3412345fcd",
@@ -162,7 +162,7 @@ export class Vault {
     if (existingAccount) {
       for (const i in existingAccount.contactList[server]) {
         if (existingAccount.contactList[server][i] == contact) {
-          existingAccount.contactList[server] = existingAccount.contactList[server].splice(i, 1);
+          existingAccount.contactList[server].splice(i, 1);
           break;
         }
       }
@@ -172,7 +172,6 @@ export class Vault {
     return false;
   }
 
-  // contRact
   async addContract (accountAddress, server, contract) {
     const transaction = this.db.transaction('accounts', 'readwrite');
     const store = transaction.objectStore('accounts');
@@ -197,7 +196,7 @@ export class Vault {
     if (existingAccount) {
       for (const i in existingAccount.contractList[server]) {
         if (existingAccount.contractList[server][i] == contract) {
-          existingAccount.contractList[server] = existingAccount.contractList[server].splice(i, 1);
+          existingAccount.contractList[server].splice(i, 1);
           break;
         }
       }
@@ -207,16 +206,16 @@ export class Vault {
     return false;
   }
 
-  async addToken (accountAddress, server, token) {
+  async addToken (accountAddress, server, tokenObject) {
     const transaction = this.db.transaction('accounts', 'readwrite');
     const store = transaction.objectStore('accounts');
     const existingAccount = await store.get(accountAddress);
     if (existingAccount) {
       if (existingAccount.tokenList[server]) {
-        existingAccount.tokenList[server].push(token);
+        existingAccount.tokenList[server].push(tokenObject);
       } else {
         existingAccount.tokenList[server] = [];
-        existingAccount.tokenList[server].push(token);
+        existingAccount.tokenList[server].push(tokenObject);
       }
       await store.put(existingAccount);
       return true;
@@ -224,19 +223,69 @@ export class Vault {
     return false;
   }
 
-  async removeToken (accountAddress, server, contract) {
+  async removeToken (accountAddress, server, tokenAddress) {
     const transaction = this.db.transaction('accounts', 'readwrite');
     const store = transaction.objectStore('accounts');
     const existingAccount = await store.get(accountAddress);
     if (existingAccount) {
       for (const i in existingAccount.tokenList[server]) {
-        if (existingAccount.tokenList[server][i] == contract) {
-          existingAccount.tokenList[server] = existingAccount.tokenList[server].splice(i, 1);
+        if (existingAccount.tokenList[server][i].address == tokenAddress) {
+          existingAccount.tokenList[server].splice(i, 1);
           break;
         }
       }
       await store.put(existingAccount);
       return true;
+    }
+    return false;
+  }
+
+  async getToken (accountAddress, server, tokenAddress) {
+    const transaction = this.db.transaction('accounts', 'readwrite');
+    const store = transaction.objectStore('accounts');
+    const existingAccount = await store.get(accountAddress);
+    if (existingAccount) {
+      let tokenObject = {};
+      for (const i in existingAccount.tokenList[server]) {
+        if (existingAccount.tokenList[server][i].address == tokenAddress) {
+          tokenObject = existingAccount.tokenList[server][i]
+          break;
+        }
+      }
+      return tokenObject;
+    }
+    return {};
+  }
+
+  async tokenList (accountAddress, server) {
+    const transaction = this.db.transaction('accounts', 'readwrite');
+    const store = transaction.objectStore('accounts');
+    const existingAccount = await store.get(accountAddress);
+    if (existingAccount) {
+      return typeof existingAccount.tokenList[server] == "undefined" ? [] : existingAccount.tokenList[server];
+    }
+    return false;
+  }
+
+  async updateTokenBalance(destination, server, tokenAddress, amount) {
+    const transaction = this.db.transaction('accounts', 'readwrite');
+    const store = transaction.objectStore('accounts');
+    const existingAccount = await store.get(destination);
+    if (existingAccount) {
+      let needUpdate = false;
+      for (const i in existingAccount.tokenList[server]) {
+        if (existingAccount.tokenList[server][i].address == tokenAddress) {
+          existingAccount.tokenList[server][i].balance = amount;
+          needUpdate = true;
+          break;
+        }
+      }
+      if (needUpdate) {
+        await store.put(existingAccount);
+        return true;
+      } else {
+        return false;
+      }
     }
     return false;
   }

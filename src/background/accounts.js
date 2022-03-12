@@ -1,15 +1,20 @@
 import { Vault } from "../common/vault.js";
-import { generateRandomHex, encrypt, decrypt, strToHex, broadcastMessage, utf8ToBase64, base64ToUtf8 } from "../common/utils.js";
+import { toNano, generateRandomHex, encrypt, decrypt, strToHex, broadcastMessage, utf8ToBase64, base64ToUtf8 } from "../common/utils.js";
 import EverLib from "../common/everLib.js";
 import SafeMultisigWallet from "./solidity/SafeMultisigWallet/SafeMultisigWallet.json";
 import Transfer from "./solidity/Transfer/Transfer.json";
 import GiverV2 from "./solidity/GiverV2/GiverV2.json";
 import giverkeyPair from "./solidity/GiverV2/GiverV2.keys.json";
+import TokenRootTip3 from "./solidity/TIP-3/TokenRoot.abi.json";
+import TokenWalletTip3 from "./solidity/TIP-3/TokenWallet.abi.json";
 import { CURRENT_KS_PASSWORD, SAFE_MULTISIG_WALLET_CODE_HASH, currentRetrievingTransactionsPeriod, currentRetrievingTransactionsLastTime, settingsStore, currentEnabledPinPad } from "../common/stores.js";
+
+const DEPLOY_WALLET_VALUE = toNano(0.1);
 
 export const accounts = () => {
   let currentPassword = "";
   const vault = new Vault();
+
   vault.init();
 
   let retrievingTransactionsIntervalPeriod = 0.1;
@@ -54,18 +59,38 @@ export const accounts = () => {
             continue;
           }
           const txData = transactions[i];
-          if (txData.orig_status === 0 && txData.end_status === 1) {
-            txData.type = "deploy";
-          } else if (txData.aborted === true && txData.orig_status != 0) {
-            txData.type = "error";
+
+          const detectedToken = await detectTokenTransaction(server, txData.in_message.boc);
+
+          if (detectedToken != "error" && detectedToken.type == 3) {
+            if (detectedToken.name == "acceptTransfer") {
+              if (txData.aborted === true && txData.orig_status == 1) {
+                txData.type = "error";
+              } else {
+                txData.type = "tokenIncoming";
+              }
+              txData.contractName  = "TokenWalletTip3";
+              txData.detectedToken = detectedToken;
+              txData.amount        = detectedToken.value.amount;
+              txData.coinName      = ralatedAddresses[txData.account_addr].symbol;
+              txData.icon          = ralatedAddresses[txData.account_addr].icon;
+              await addTransaction(address, server, txData);
+              needToUpdateWalletUI = true;
+            }
           } else {
-            txData.type = (txData.balance_delta < 0 ? "transfer": "incoming");
+            if (txData.orig_status === 0 && txData.end_status === 1) {
+              txData.type = "deploy";
+            } else if (txData.aborted === true && txData.orig_status != 0) {
+              txData.type = "error";
+            } else {
+              txData.type = (txData.balance_delta < 0 ? "transfer": "incoming");
+            }
+            txData.contractName = "SafeMultisigWallet";
+            txData.coinName     = network.coinName;
+            txData.amount       = txData.balance_delta;
+            await addTransaction(transactionsAddresses[j], server, txData);
+            needToUpdateWalletUI = true;
           }
-          txData.contractName = "SafeMultisigWallet";
-          txData.coinName     = network.coinName;
-          txData.amount       = txData.balance_delta;
-          await addTransaction(transactionsAddresses[j], server, txData);
-          needToUpdateWalletUI = true;
         }
       }
     }
@@ -79,8 +104,14 @@ export const accounts = () => {
     const EverLibClient     = await EverLib.getClient(server);
     //here can be case when network is not responded
     let transactions = [];
+    const ralatedAddresses = await addressesRelatedToAccount(address, server);
+    let addresses = [];
+    for (let address in ralatedAddresses) {
+      addresses.push(address);
+    }
+    const listAddresses = [address].concat(addresses);
     try {
-      transactions     = await EverLib.requestAccountsTransactions([address], fromStart ? 0: retrievingTransactionsLastTime);
+      transactions = await EverLib.requestAccountsTransactions(listAddresses, fromStart ? 0: retrievingTransactionsLastTime);
       if (transactions.length === 0) {
         return;
       }
@@ -95,26 +126,59 @@ export const accounts = () => {
     });
     let needToUpdateWalletUI = false;
     for (let i in transactions) {
-      if (transactions[i].account_addr == address && txIds.includes(transactions[i].id) === true) {
+      if (txIds.includes(transactions[i].id) === true) {
         continue;
       }
       const txData = transactions[i];
-      if (txData.orig_status === 0 && txData.end_status === 1) {
-        txData.type = "deploy";
-      } else if (txData.aborted === true && txData.orig_status == 1) {
-        txData.type = "error";
+
+      const detectedToken = await detectTokenTransaction(server, txData.in_message.boc);
+
+      if (detectedToken != "error" && detectedToken.type == 3) {
+        if (detectedToken.name == "acceptTransfer") {
+          if (txData.aborted === true && txData.orig_status == 1) {
+            txData.type = "error";
+          } else {
+            txData.type = "tokenIncoming";
+          }
+          txData.contractName  = "TokenWalletTip3";
+          txData.detectedToken = detectedToken;
+          txData.amount        = detectedToken.value.amount;
+          txData.coinName      = ralatedAddresses[txData.account_addr].symbol;
+          txData.icon          = ralatedAddresses[txData.account_addr].icon;
+          await addTransaction(address, server, txData);
+          needToUpdateWalletUI = true;
+        }
       } else {
-        txData.type = (txData.balance_delta < 0 ? "transfer": "incoming");
+        // Native transfer
+        if (txData.orig_status === 0 && txData.end_status === 1) {
+          txData.type = "deploy";
+        } else if (txData.aborted === true && txData.orig_status == 1) {
+          txData.type = "error";
+        } else {
+          txData.type = (txData.balance_delta < 0 ? "transfer": "incoming");
+        }
+        txData.contractName = "SafeMultisigWallet";
+        txData.coinName     = network.coinName;
+        txData.amount       = txData.balance_delta;
+        await addTransaction(address, server, txData);
+        needToUpdateWalletUI = true;
       }
-      txData.contractName = "SafeMultisigWallet";
-      txData.coinName     = network.coinName;
-      txData.amount       = txData.balance_delta;
-      await addTransaction(address, server, txData);
-      needToUpdateWalletUI = true;
     }
     if (needToUpdateWalletUI) {
       broadcastMessage("updateWalletUI");
     }
+  };
+
+  const addressesRelatedToAccount = async (accountAddress, server) => {
+    const tokenList = await vault.tokenList(accountAddress, server);
+    const addresses = {};
+    for( let i in tokenList) {
+      if (tokenList[i].type == 3) {
+        const walletAddress = await getTokenType3WalletAddress(server, tokenList[i].address, accountAddress);
+        addresses[walletAddress] = tokenList[i];
+      }
+    }
+    return addresses;
   };
 
   const updateTransactionsListAllNetworks = async (address) => {
@@ -694,6 +758,15 @@ export const accounts = () => {
     return keyPair.public;
   };
 
+  /**
+   * Danger method
+  */
+  const getKeyPairForAccount = async (accountAddress) => {
+    const account = await vault.getAccount(accountAddress);
+    const keyPair = await decrypt(currentPassword, account.encrypted);
+    return keyPair;
+  };
+
   const getNaclBoxPublicKey = async (accountAddress) => {
     const account = await vault.getAccount(accountAddress);
     const keyPair = await decrypt(currentPassword, account.encrypted);
@@ -718,13 +791,250 @@ export const accounts = () => {
     return base64ToUtf8(result);
   };
 
+  /**
+   * Tokens
+   */
+  const getFamousTokens = () => {
+    return {"main.ton.dev": [
+            /*
+            {
+              "name": "Wrapped TON",
+              "symbol": "WTON",
+              "decimals": 9,
+              "address": "",
+              "icon": "",
+              "type": "3"
+            }
+            */
+            ],
+          };
+  };
+
+  const importToken = async (accountAddress, server, tokenObject) => {
+    const result = await vault.addToken(accountAddress, server, tokenObject);
+    broadcastMessage("updateWalletUI");
+    return result;
+  };
+
+  /**
+   *  we can add caching here later
+   */
+  const getTokenListForUser = async (accountAddress, server) => {
+    const tokenList = await vault.tokenList(accountAddress, server);
+    for (let i in tokenList) {
+      try {
+        tokenList[i].balance = await getCurrentTokenBalance(accountAddress, server, tokenList[i].address);
+      } catch(e) {
+        tokenList[i].balance = 0;
+      }
+    };
+    return tokenList;
+  };
+
+  const calculateFeeForToken = async (accountAddress, server, txData, keyPair) => {
+    if (txData.params.token.type == 3) {
+      return calculateFeeForTokenType3(accountAddress, server, txData, keyPair);
+    }
+  };
+
+  const transferToken = async (accountAddress, server, txData, keyPair) => {
+    if (txData.params.token.type == 3) {
+      return transferTokenType3(accountAddress, server, txData, keyPair);
+    }
+  };
+
+  const getCurrentTokenBalance = async (destination, server, tokenRootAddress) => {
+    const EverLibClient = await EverLib.getClient(server);
+    let amount = 0;
+    try {
+      const tokenObject = await vault.getToken(destination, server, tokenRootAddress);
+      if (typeof tokenObject.type != "undefined") {
+        if (tokenObject.type == "3") {
+          const walletAddress = await getTokenType3WalletAddress(server, tokenRootAddress, destination);
+          amount = await getTokenType3Balance(server, walletAddress);
+        }
+      }
+    } catch(e) {
+      throw e;
+    }
+    await vault.updateTokenBalance(destination, server, tokenRootAddress, amount);
+    return amount;
+  };
+
+  const getTokenInfo = async (server, tokenRootAddress) => {
+    const type3 = await getTokenType3Info(server, tokenRootAddress);
+    if (type3 != false) {
+      type3.type = 3;
+      return type3;
+    }
+    return false;
+  };
+
+  const detectTokenTransaction = async (server, message) => {
+    const EverLibClient = await EverLib.getClient(server);
+
+    let decodedMessageForTokenTransfer;
+    try {
+      decodedMessageForTokenTransfer = await EverLibClient.decodeMessage(TokenWalletTip3, message);
+      decodedMessageForTokenTransfer.type = 3;
+      return decodedMessageForTokenTransfer;
+    } catch (exp) {
+      return "error";
+    }
+  };
+
+  const calculateFeeForTokenType3 = async (accountAddress, server, txData, keyPair) => {
+    try {
+      const EverLibClient = await EverLib.getClient(server);
+
+      const payloadForToken = await EverLibClient.encodeMessageBody(Transfer.abi,
+        "transfer",
+        { comment: strToHex(txData.params.message) }
+      );
+
+      const walletAddressOwner = await getTokenType3WalletAddress(server, txData.params.token.address, accountAddress);
+
+      const payloadBody = await EverLibClient.encodeMessageBody(TokenWalletTip3, "transfer", {
+        amount: txData.params.amount,
+        recipient: txData.params.destination,
+        deployWalletValue: 0,
+        remainingGasTo: accountAddress,
+        notify: false,
+        payload: payloadForToken
+      });
+
+      const result = await EverLibClient.calcRunFees(accountAddress,
+                                                    "sendTransaction",
+                                                    SafeMultisigWallet.abi,
+                                                    { dest: walletAddressOwner,
+                                                      value: DEPLOY_WALLET_VALUE*2,
+                                                      bounce: true,
+                                                      flags: 1,
+                                                      payload: payloadBody
+                                                    },
+                                                    keyPair);
+      return {fee: result};
+    } catch (exp) {
+      return {error: exp.message};
+    }
+  };
+
+  const getTokenType3WalletAddress = async (server, tokenRootAddress, ownerAddress) => {
+    const EverLibClient = await EverLib.getClient(server);
+    const runResult = await EverLibClient.runLocalContract(tokenRootAddress, TokenRootTip3, 'walletOf', {
+      answerId: 0,
+      walletOwner: ownerAddress
+    }, null);
+    return runResult.value0;
+  };
+
+  const getTokenType3Info = async (server, tokenRootAddress) => {
+    const EverLibClient = await EverLib.getClient(server);
+    try {
+      const runResultName = await EverLibClient.runLocalContract(tokenRootAddress, TokenRootTip3, 'name', {answerId: 0});
+      const outName = runResultName.value0;
+
+      const runResultSymbol = await EverLibClient.runLocalContract(tokenRootAddress, TokenRootTip3, 'symbol', {answerId: 0});
+      const outSymbol = runResultSymbol.value0;
+
+      const runResultDecimals = await EverLibClient.runLocalContract(tokenRootAddress, TokenRootTip3, 'decimals', {answerId: 0});
+      const outDecimals = runResultDecimals.value0;
+
+      const runResultTotalSupply = await EverLibClient.runLocalContract(tokenRootAddress, TokenRootTip3, 'totalSupply', {answerId: 0});
+      const outTotalSupply = runResultTotalSupply.value0;
+
+      return {
+        name: outName,
+        symbol: outSymbol,
+        decimals: Number(outDecimals),
+        totalSupply: Number(outTotalSupply),
+        icon: ''
+      }
+    } catch(e) {
+      return false;
+    }
+  };
+
+  const getTokenType3Balance = async (server, walletAddress) => {
+    const EverLibClient = await EverLib.getClient(server);
+    const runResult = await EverLibClient.runLocalContract(walletAddress, TokenWalletTip3, 'balance', {answerId: 0});
+    return runResult.value0;
+  };
+
+  const transferTokenType3 = async (accountAddress, server, txData, keyPair) => {
+    try {
+      const EverLibClient = await EverLib.getClient(server);
+
+      const payloadForToken = await EverLibClient.encodeMessageBody(Transfer.abi,
+        "transfer",
+        { comment: strToHex(txData.params.message) }
+      );
+
+      const walletAddressOwner = await getTokenType3WalletAddress(server, txData.params.token.address, accountAddress);
+
+      const payloadBodyParams = {
+        amount: txData.params.amount,
+        recipient: txData.params.destination,
+        deployWalletValue: DEPLOY_WALLET_VALUE,
+        remainingGasTo: accountAddress,
+        notify: false,
+        payload: payloadForToken
+      };
+
+      const payloadBody = await EverLibClient.encodeMessageBody(TokenWalletTip3, "transfer", payloadBodyParams);
+
+      const result = await EverLibClient.sendTransaction(accountAddress,
+                                                          "sendTransaction",
+                                                          SafeMultisigWallet.abi,
+                                                          { dest: walletAddressOwner,
+                                                            value: DEPLOY_WALLET_VALUE*2,
+                                                            bounce: true,
+                                                            flags: 1,
+                                                            payload: payloadBody
+                                                          },
+                                                          keyPair);
+
+        result.type          = "tokenTransfer";
+        result.contractName  = "TokenWalletTip3"; // we will be able to find ABI
+        result.coinName      = txData.params.token.symbol;
+        result.amount        = txData.params.amount;
+        result.allBalance    = txData.params.allBalance;
+        result.icon          = txData.params.token.icon;
+        result.parameters = {
+          initFunctionName: "transfer",
+          initFunctionInput: payloadBodyParams
+        };
+        await addTransaction(accountAddress, server, result);
+        await updateAllBalances(server);
+
+        // if internal tx, then need to update immediately
+        const accounts          = await vault.getAccounts();
+        const accountsAddresses = accounts.map((account) => {
+          return account.address;
+        });
+
+        if (accountsAddresses.includes(txData.params.destination) === true) {
+          updateTransactionsList(txData.params.destination, server);
+        }
+      return { result };
+    } catch (exp) {
+      return { error: exp.message };
+    }
+  };
+
+  const removeToken = async (accountAddress, server, tokenAddress) => {
+    return await vault.removeToken(accountAddress, server, tokenAddress);
+  };
+
   return {
+    //Account
     createPassword,
     checkPassword,
     firstRun,
     takeFromGiver,
     getCurrentBalance,
     getPublicKeyForAccount,
+    getKeyPairForAccount,
     deployNewWallet,
     createKeystore,
     addNewAccount,
@@ -750,6 +1060,17 @@ export const accounts = () => {
     getSignature,
     getNaclBoxPublicKey,
     doEncryptionForMessage,
-    doDecryptionForMessage
+    doDecryptionForMessage,
+
+    //Tokens
+    getFamousTokens,
+    getTokenInfo,
+    importToken,
+    getTokenListForUser,
+    detectTokenTransaction,
+    calculateFeeForToken,
+    transferToken,
+    getCurrentTokenBalance,
+    removeToken,
   };
 };

@@ -20,6 +20,8 @@
   import AccountMain from "./Pages/Account/AccountMain.svelte";
   import AddNewAccount from "./Pages/Account/AddNewAccount.svelte";
   import AddNewNetwork from "./Pages/Network/AddNewNetwork.svelte";
+  import NetworksList from "./Pages/Network/NetworksList.svelte";
+  import TokensList from "./Pages/Tokens/TokensList.svelte";
   import LockScreen from "./Pages/Common/LockScreen.svelte";
   import Settings from "./Pages/Common/Settings.svelte";
   import About from "./Pages/Common/About.svelte";
@@ -36,6 +38,8 @@
     AccountMain,
     About,
     AddNewNetwork,
+    NetworksList,
+    TokensList,
     Settings,
 
     //full pages

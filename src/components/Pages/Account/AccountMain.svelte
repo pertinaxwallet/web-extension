@@ -288,10 +288,10 @@
     }
   }
   .account-tx-wrapper {
-    max-height: 17rem;
+    max-height: 23rem;
     overflow: hidden;
     .account-tx-wrapper-scroll {
-      max-height: 17rem;
+      max-height: 23rem;
       overflow-y: auto;
       width: calc(100% + 20px);
     }
@@ -308,6 +308,10 @@
     flex-grow: 1;
     padding: 0px;
     width: auto;
+  }
+  .token-image {
+    width: 3rem;
+    height: 3rem;
   }
 </style>
 
@@ -432,6 +436,20 @@
                 class="action-button"
                 src={mdiBriefcaseUpload}
                 size="2"
+                on:click={() => viewTransactionOnExplorer(tx.id)} />
+            {/if}
+            {#if tx.type == 'tokenTransfer'}
+              <img
+                alt=""
+                class="action-button token-image"
+                src={typeof tx.icon != 'undefined' && tx.icon != '' ? tx.icon : '/assets/img/icon-token-128.png'}
+                on:click={() => viewTransactionOnExplorer(tx.id)} />
+            {/if}
+            {#if tx.type == 'tokenIncoming'}
+              <img
+                alt=""
+                class="action-button token-image"
+                src={typeof tx.icon != 'undefined' && tx.icon != '' ? tx.icon : '/assets/img/icon-token-128.png'}
                 on:click={() => viewTransactionOnExplorer(tx.id)} />
             {/if}
             {#if tx.type == 'transfer'}

@@ -400,8 +400,16 @@ const toNano = (amount) => {
   return new BigNumber(amount).times(10**9).toNumber();
 };
 
+const fromDecimal = (amount, decimal) => {
+  return new BigNumber(amount).div(10**decimal).toNumber();
+};
+
 const strToHex = (text) => {
   return serializeBufferForStorage(Unibabel.utf8ToBuffer(text)).substr(2);
+};
+
+const hexToStr = (hex) => {
+  return Unibabel.bufferToUtf8(serializeBufferFromStorage(hex));
 };
 
 const base64ToHex = (base64) => {
@@ -437,6 +445,7 @@ export {
   openRequestPopup,
   closeRequestPopup,
   strToHex,
+  hexToStr,
   base64ToHex,
   utf8ToBase64,
   base64ToUtf8,
@@ -446,5 +455,6 @@ export {
   shortAddress,
   copyToClipboard,
   fromNano,
-  toNano
+  toNano,
+  fromDecimal
 };

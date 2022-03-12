@@ -32,6 +32,7 @@
     shortAddress,
     copyToClipboard,
     fromNano,
+    fromDecimal,
   } from "../../../common/utils.js";
 
   //Context
@@ -45,6 +46,7 @@
   let giverLoading = false;
   let deployLoading = false;
   let transactions = [];
+  let assets = [];
 
   onMount(() => {
     balance = $currentAccount.balance[$currentNetwork.server]
@@ -52,12 +54,14 @@
       : 0;
     checkBalance($currentAccount.address, $currentNetwork.server);
     getTransactions($currentAccount.address, $currentNetwork.server, 10, 1);
+    getTokenList($currentAccount.address, $currentNetwork.server);
   });
 
   const walletUIUpdateListener = (message) => {
     if (message.type === "updateWalletUI") {
       checkBalance($currentAccount.address, $currentNetwork.server);
       getTransactions($currentAccount.address, $currentNetwork.server, 10, 1);
+      getTokenList($currentAccount.address, $currentNetwork.server);
     }
   };
 
@@ -112,12 +116,30 @@
       });
   };
 
+  const getTokenList = (accountAddress, server) => {
+    browser.runtime
+      .sendMessage({
+        type: "tokenList",
+        data: {
+          accountAddress: accountAddress,
+          server: server,
+        },
+      })
+      .then((result) => {
+        assets = result;
+      })
+      .catch((e) => {
+        console.log(e); // here don't need to show any error for user, usually it is the network issue in the development environment
+      });
+  };
+
   currentAccount.subscribe((value) => {
     balance = value.balance[$currentNetwork.server]
       ? fromNano(value.balance[$currentNetwork.server])
       : 0;
     checkBalance(value.address, $currentNetwork.server);
     getTransactions(value.address, $currentNetwork.server, 10, 1);
+    getTokenList(value.address, $currentNetwork.server);
     giverLoading = false;
     deployLoading = false;
   });
@@ -128,6 +150,7 @@
       : 0;
     checkBalance($currentAccount.address, value.server);
     getTransactions($currentAccount.address, value.server, 10, 1);
+    getTokenList($currentAccount.address, value.server);
     giverLoading = false;
     deployLoading = false;
   });
@@ -187,9 +210,16 @@
     //show enrolling form
     browser.tabs.create({ url: "https://docs.google.com/forms/d/e/1FAIpQLSeDZwc8cvMKhjQc2PzTiqNCJ31oAqvhzbO6IEWBv1CBu2b3LA/viewform" });
   };
-*/
-  const sendTransaction = () => {
+  */
+  const sendTransactionEver = () => {
     openModal("ModalSendingTransaction");
+  };
+
+  const sendTransactionToken = (tokenObject) => {
+    if (tokenObject.icon == "") {
+      tokenObject.icon = "/assets/img/icon-token-128.png";
+    }
+    openModal("ModalSendingTransaction", { token: tokenObject });
   };
 
   const deploy = () => {
@@ -220,6 +250,10 @@
           accountStore.changeAccount(newCurrentAccount);
         }
       });
+  };
+
+  const importToken = () => {
+    openModal("ModalImportToken");
   };
 </script>
 
@@ -306,6 +340,7 @@
     justify-content: space-between;
     padding: 1rem;
     border-bottom: 1px dashed var(--color-black);
+    cursor: pointer;
   }
   .asset-logo {
     width: 32px;
@@ -329,6 +364,9 @@
       width: 40px;
       cursor: pointer;
     }
+    .tx-balance {
+      width: 115px;
+    }
   }
   .account-tx-wrapper {
     max-height: 17rem;
@@ -338,6 +376,25 @@
       overflow-y: auto;
       width: calc(100% + 20px);
     }
+  }
+  .token-list-wrapper {
+    max-height: 17rem;
+    overflow: hidden;
+    padding: 0px;
+    width: 100%;
+    .token-list-wrapper-scroll {
+      max-height: 17rem;
+      overflow-y: auto;
+      padding: 0px;
+      width: calc(100% + 20px);
+    }
+  }
+  .import-asset {
+    padding: 1rem;
+  }
+  .token-image {
+    width: 3rem;
+    height: 3rem;
   }
 </style>
 
@@ -380,10 +437,7 @@
   in:fade={{ delay: 0, duration: 200 }}>
   <div class="flex-column">
     <div class="flex-row is-horizontal-align">
-      <img
-        src="/assets/img/icon-ever-128.png"
-        class="token-logo"
-        alt="logo" />
+      <img src="/assets/img/icon-ever-128.png" class="token-logo" alt="logo" />
     </div>
     <div class="flex-row is-horizontal-align account-balance-amount">
       {balance}
@@ -432,7 +486,7 @@
           title={$_('Send transaction')}
           class="action-button is-rounded"
           on:click={() => {
-            sendTransaction();
+            sendTransactionEver();
           }}
           icon={mdiArrowTopRight} />
       {/if}
@@ -445,16 +499,47 @@
   <Tab tabid="tx">{$_('Transactions')}</Tab>
 </Tabs>
 {#if active_tab == 'assets'}
-  <div class="account-assets-wrapper">
-    <div class="flex-row is-horizontal-align account-assets">
-      <img
-        src="/assets/img/icon-ever-128.png"
-        class="asset-logo"
-        alt="logo" />
-      <span class="asset-balance is-center">
-        {balance}
-        {$currentNetwork.coinName}
-      </span>
+  <div class="token-list-wrapper">
+    <div class="token-list-wrapper-scroll">
+      <div
+        class="flex-row is-horizontal-align account-assets"
+        on:click={() => {
+          sendTransactionEver();
+        }}>
+        <img
+          src="/assets/img/icon-ever-128.png"
+          class="asset-logo"
+          alt="logo" />
+        <span class="asset-balance is-center">
+          {balance}
+          {$currentNetwork.coinName}
+          ({$_('Native')})
+        </span>
+      </div>
+      {#each assets as asset}
+        <div
+          class="flex-row is-horizontal-align account-assets"
+          on:click={() => {
+            sendTransactionToken(asset);
+          }}>
+          <img
+            src={asset.icon != '' ? asset.icon : '/assets/img/icon-token-128.png'}
+            class="asset-logo"
+            title={asset.address}
+            alt="logo" />
+          <span class="asset-balance is-center">
+            {fromDecimal(asset.balance, asset.decimals)}
+            &nbsp;
+            <span title={asset.name}>{asset.symbol}</span>
+            &nbsp; ({$_('Type')}
+            &nbsp;
+            {asset.type})
+          </span>
+        </div>
+      {/each}
+      <div class="flex-row is-horizontal-align import-asset">
+        <a href={'#'} on:click={() => importToken()}>{$_('Import token')}</a>
+      </div>
     </div>
   </div>
 {/if}
@@ -471,6 +556,20 @@
                 class="action-button"
                 src={mdiBriefcaseUpload}
                 size="2"
+                on:click={() => viewTransactionOnExplorer(tx.id)} />
+            {/if}
+            {#if tx.type == 'tokenTransfer'}
+              <img
+                alt=""
+                class="action-button token-image"
+                src={typeof tx.icon != 'undefined' && tx.icon != '' ? tx.icon : '/assets/img/icon-token-128.png'}
+                on:click={() => viewTransactionOnExplorer(tx.id)} />
+            {/if}
+            {#if tx.type == 'tokenIncoming'}
+              <img
+                alt=""
+                class="action-button token-image"
+                src={typeof tx.icon != 'undefined' && tx.icon != '' ? tx.icon : '/assets/img/icon-token-128.png'}
                 on:click={() => viewTransactionOnExplorer(tx.id)} />
             {/if}
             {#if tx.type == 'transfer'}
@@ -500,7 +599,7 @@
             <span
               class="tx-date">{new Date(tx.now * 1000).toLocaleString()}</span>
           </span>
-          <span class="tx-balance is-center" title={tx.amount}>
+          <span class="tx-balance is-left" title={tx.amount}>
             {fromNano(tx.amount)}
             {tx.coinName}
           </span>

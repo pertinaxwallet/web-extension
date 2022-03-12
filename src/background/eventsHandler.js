@@ -198,9 +198,9 @@ export const eventsHandler = (controller) => {
 
           if (message.type === 'getTransactions') return Promise.resolve(controller.accounts.getTransactions(message.data.accountAddress, message.data.server, message.data.count, message.data.page));
 
-          if (message.type === 'calculateFeeForSafeMultisig') return Promise.resolve(controller.accounts.calculateFeeForSafeMultisig(message.data.accountAddress, message.data.server,  message.data.txData));
+          if (message.type === 'calculateFee') return Promise.resolve(controller.calculateFee(message.data.accountAddress, message.data.server,  message.data.txData));
 
-          if (message.type === 'sendTransaction') return Promise.resolve(controller.accounts.sendTransaction(message.data.accountAddress, message.data.server,  message.data.txData));
+          if (message.type === 'runTransaction') return Promise.resolve(controller.runTransaction(message.data.accountAddress, message.data.server,  message.data.txData));
 
           if (message.type === 'takeFromGiver') return Promise.resolve(controller.accounts.takeFromGiver(message.data.accountAddress, message.data.server));
 
@@ -219,7 +219,7 @@ export const eventsHandler = (controller) => {
 
           if (message.type === 'changeNetwork') return Promise.resolve(controller.changeNetwork(message.data));
 
-          if (message.type === 'removeNetwork') return Promise.resolve(controller.removeNetwork(message.data));
+          if (message.type === 'removeNetworks') return Promise.resolve(controller.removeNetworks(message.data));
 
           // Settings
           if (message.type === 'setSettings') return Promise.resolve(controller.setSettings(message.data));
@@ -237,6 +237,17 @@ export const eventsHandler = (controller) => {
           if (message.type === 'decryptMessage') return Promise.resolve(controller.doDecryptionForMessage(message.data));
 
           if (message.type === 'getSignature') return Promise.resolve(controller.getSignature(message.data));
+
+          //Tokens
+          if (message.type === 'getFamousTokens') return Promise.resolve(controller.getFamousTokens(message.data));
+
+          if (message.type === 'importToken') return Promise.resolve(controller.importToken(message.data));
+
+          if (message.type === 'tokenList') return Promise.resolve(controller.getTokenListForUser(message.data));
+
+          if (message.type === 'getTokenInfo') return Promise.resolve(controller.accounts.getTokenInfo(message.data.server, message.data.tokenAddress));
+
+          if (message.type === 'removeTokens') return Promise.resolve(controller.removeTokens(message.data));
         }
       }
     }

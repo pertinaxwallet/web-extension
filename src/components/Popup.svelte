@@ -43,6 +43,7 @@
   import ModalGetAccount from "./Elements/Popup/Modals/GetAccount.svelte";
   import ModalGetEndpoint from "./Elements/Popup/Modals/GetEndpoint.svelte";
   import ModalGetNaclBoxPublicKey from "./Elements/Popup/Modals/GetNaclBoxPublicKey.svelte";
+  import ModalImportToken from "./Elements/Popup/Modals/ImportToken.svelte";
 
   export let loaded;
 
@@ -208,7 +209,7 @@
   const Modals = { ModalEditNickname, ModalDeleteAccount, ModalError, ModalSuccess, ModalSendingTransaction,
                    ModalConfirmTransaction, ModalRequestPermission, ModalSignMessage, ModalEncryptMessage,
                    ModalDecryptMessage, ModalGetSignature, ModalGetAccount, ModalGetEndpoint,
-                   ModalGetNaclBoxPublicKey };
+                   ModalGetNaclBoxPublicKey, ModalImportToken };
 
 </script>
 

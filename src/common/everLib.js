@@ -1,5 +1,5 @@
-import { TonClient, signerExternal, signerNone, signerKeys, abiContract, accountForExecutorAccount } from "@tonclient/core";
-import { libWeb } from "@tonclient/lib-web";
+import { TonClient, signerExternal, signerNone, signerKeys, abiContract, accountForExecutorAccount } from "@eversdk/core";
+import { libWeb } from "@eversdk/lib-web";
 import { Vault } from "../common/vault.js";
 
 TonClient.useBinaryLibrary(libWeb);
@@ -92,13 +92,28 @@ class EverLib {
 
   /**
    * Description
+   * https://github.com/tonlabs/ever-sdk-js/blob/master/packages/core/src/modules.ts#L3193
+  **/
+  async decodeMessage(abi, message) {
+    try {
+      return await this.instance.abi.decode_message({
+        abi: abiContract(abi),
+        message: message
+      });
+    } catch (exp) {
+      throw exp;
+    }
+  }
+
+  /**
+   * Description
    * https://github.com/tonlabs/ton-client-js/blob/master/packages/core/src/modules.ts#L2194
   **/
   async encodeMessage(address, functionName, abi, input = {}, keyPair = null) {
     try {
       return await this.instance.abi.encode_message({
         address: address,
-        signer: signerKeys(keyPair),
+        signer: keyPair == null ? signerNone() : signerKeys(keyPair),
         abi: abiContract(abi),
         call_set: {
           function_name: functionName,
@@ -220,7 +235,7 @@ class EverLib {
           }
           orderBy: { path: "now", direction: DESC }
         ) {
-          id, account_addr, now, aborted, orig_status, end_status, block_id, balance_delta(format:DEC), total_fees(format:DEC)
+          id, account_addr, now, in_message {boc, body}, out_messages {boc, body}, aborted, orig_status, end_status, block_id, balance_delta(format:DEC), total_fees(format:DEC)
         }
       }
       `});
@@ -343,6 +358,35 @@ class EverLib {
         emulateBalance: true,
         newaccount: true,
       });
+    } catch (exp) {
+      throw exp;
+    }
+  }
+
+  async runLocalContract(address, abi, functionName, input = {}, keyPair = null) {
+    try {
+      const encoded_message = await this.encodeMessage(address, functionName, abi, input, keyPair);
+
+      const bocResult = await this.instance.net.query_collection({
+        collection: 'accounts',
+        filter: { id: { eq: address } },
+        result: 'boc'
+      });
+
+      if (bocResult.result.length == 0) {
+        throw new Error("Account doesn't exists");
+      }
+
+      const response = await this.instance.tvm.run_tvm({
+        message: encoded_message.message,
+        account: bocResult.result[0].boc,
+        abi: {
+          type: 'Contract',
+          value: (abi)
+        }
+      });
+
+      return response.decoded.output;
     } catch (exp) {
       throw exp;
     }

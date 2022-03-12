@@ -5,7 +5,7 @@
   import MenuBox from "./MenuBox.svelte";
 
   /* Icons https://materialdesignicons.com/ */
-  import { mdiArchiveArrowDown, mdiArchiveArrowUp, mdiLock, mdiCog, mdiBullhorn, mdiCardBulleted } from "@mdi/js";
+  import { mdiArchiveArrowDown, mdiArchiveArrowUp, mdiLock, mdiCog, mdiAlphaTCircleOutline, mdiLan, mdiBullhorn, mdiCardBulleted } from "@mdi/js";
 
   let menus = [
     {
@@ -52,6 +52,24 @@
           name: "Settings",
           page: {
             name: "Settings",
+          },
+        },
+        {
+          id: "tokens",
+          show: true,
+          logo: mdiAlphaTCircleOutline,
+          name: "Tokens",
+          page: {
+            name: "TokensList",
+          },
+        },
+        {
+          id: "networks",
+          show: true,
+          logo: mdiLan,
+          name: "Networks",
+          page: {
+            name: "NetworksList",
           },
         },
       ]

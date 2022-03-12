@@ -10,6 +10,13 @@
   } from "../../../../common/utils.js";
 
   let allNetworks = [];
+  let icon = "/assets/img/icon-ever-128.png";
+  let symbol = $currentNetwork.coinName;
+  let title = $_("Native");
+
+  export let modalData = {};
+  let loading = false;
+  let disabled = false;
 
   onMount(() => {
     browser.runtime
@@ -17,6 +24,11 @@
       .then((result) => {
         allNetworks = result;
       });
+    if (modalData.txData.type == "sendToken") {
+      icon = modalData.txData.params.token.icon;
+      symbol = modalData.txData.params.token.symbol;
+      title = modalData.txData.params.token.name;
+    }
   });
 
   //Stores
@@ -31,10 +43,6 @@
   //Components
   import { Field, Button, Input } from "svelte-chota";
 
-  export let modalData = {};
-  let loading = false;
-  let disabled = false;
-
   //Context
   const { closeModal, openModal } = getContext("app_functions");
 
@@ -46,12 +54,12 @@
     }
   };
 
-  const sendTransaction = () => {
+  const confirmTransaction = () => {
     loading = true;
     disabled = true;
     browser.runtime
       .sendMessage({
-        type: "sendTransaction",
+        type: "runTransaction",
         data: modalData,
       })
       .then((result) => {
@@ -94,12 +102,24 @@
 </script>
 
 <style>
-  .message {
+  .title {
+    margin: 0px;
+  }
+  .token-logo {
+    width: 48px;
+    height: 48px;
+    border: var(--color-black) dashed 1px;
+    margin: 0.5rem;
+    border-radius: 50%;
   }
 </style>
 
 <div class="sending-tx flex-column">
-  <h6>{$_('Send transaction')}</h6>
+  <h6 class="title">{$_('Send transaction')}</h6>
+  <div class="is-center">
+    <img alt="logo" class="token-logo" src="{icon}"/><br/>
+    <span title="{title}">{symbol}</span>
+  </div>
   <div class="flex-row flex-center-center">
     {$_('Server')}:
     {#each allNetworks as network}
@@ -144,7 +164,7 @@
       id="save-btn"
       class="button__solid button__primary"
       {loading}
-      on:click={() => sendTransaction()}>
+      on:click={() => confirmTransaction()}>
       {$_('Send')}
     </Button>
   </div>

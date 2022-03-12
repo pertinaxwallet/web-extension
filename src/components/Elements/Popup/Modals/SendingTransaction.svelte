@@ -23,6 +23,10 @@
   export let modalData = {};
 
   let destination, amount, message;
+  let icon = "/assets/img/icon-ever-128.png";
+  let symbol = $currentNetwork.coinName;
+  let isNative = true;
+  let title = $_("Native");
   let fee = 0;
   let total = 0;
   let allBalance = false;
@@ -76,6 +80,12 @@
       }
       loadSelectAddressesList();
     }
+    if (modalData.token) {
+      isNative = false;
+      icon = modalData.token.icon;
+      symbol = modalData.token.symbol;
+      title = modalData.token.name;
+    }
   });
 
   currentAccount.subscribe((value) => {
@@ -83,11 +93,15 @@
   });
 
   const setMax = () => {
-    amount.value = fromNano(
-      $currentAccount.balance[$currentNetwork.server]
-        ? $currentAccount.balance[$currentNetwork.server]
-        : 0
-    );
+    if (isNative) {
+      amount.value = fromNano(
+        $currentAccount.balance[$currentNetwork.server]
+          ? $currentAccount.balance[$currentNetwork.server]
+          : 0
+      );
+    } else {
+      amount.value = fromNano(modalData.token.balance);
+    }
     allBalance = true;
     calculateFee();
   };
@@ -131,28 +145,47 @@
       disabled = true;
       return;
     }
-    const maxBalance = $currentAccount.balance[$currentNetwork.server]
-      ? $currentAccount.balance[$currentNetwork.server]
-      : 0;
-    if (!allBalance && new BigNumber(toNano(amount.value)).gt(maxBalance)) {
-      allBalance = true;
-      amount.value = fromNano(maxBalance);
+    let txData, maxBalance;
+    if (isNative) {
+      maxBalance = $currentAccount.balance[$currentNetwork.server]
+        ? $currentAccount.balance[$currentNetwork.server]
+        : 0;
+      if (!allBalance && new BigNumber(toNano(amount.value)).gt(maxBalance)) {
+        allBalance = true;
+        amount.value = fromNano(maxBalance);
+      }
+      txData = {
+        type: "send",
+        params: {
+          amount: toNano(amount.value),
+          message: message.value,
+          destination: destination.dataset.value,
+          allBalance: allBalance,
+        },
+      };
+    } else {
+      maxBalance = modalData.token.balance;
+      if (!allBalance && new BigNumber(toNano(amount.value)).gt(maxBalance)) {
+        allBalance = true;
+        amount.value = maxBalance;
+      }
+      txData = {
+        type: "sendToken",
+        params: {
+          amount: toNano(amount.value),
+          message: message.value,
+          destination: destination.dataset.value,
+          token: modalData.token,
+        }
+      };
     }
     browser.runtime
       .sendMessage({
-        type: "calculateFeeForSafeMultisig",
+        type: "calculateFee",
         data: {
           accountAddress: $currentAccount.address,
           server: $currentNetwork.server,
-          txData: {
-            type: "send",
-            params: {
-              amount: toNano(amount.value),
-              message: message.value,
-              destination: destination.dataset.value,
-              allBalance: allBalance,
-            },
-          },
+          txData: txData,
         },
       })
       .then((result) => {
@@ -163,18 +196,20 @@
         const maxBalance = $currentAccount.balance[$currentNetwork.server]
           ? $currentAccount.balance[$currentNetwork.server]
           : 0;
-        if (allBalance) {
-          amount.value = fromNano(maxBalance - toNano(fee));
-          total = fromNano(maxBalance);
-        } else {
-          if (
-            new BigNumber(toNano(amount.value) + toNano(fee)).gt(maxBalance)
-          ) {
+        if (isNative) {
+          if (allBalance) {
             amount.value = fromNano(maxBalance - toNano(fee));
             total = fromNano(maxBalance);
           } else {
-            total = fromNano(toNano(amount.value) + toNano(fee));
+            if (new BigNumber(toNano(amount.value) + toNano(fee)).gt(maxBalance)) {
+              amount.value = fromNano(maxBalance - toNano(fee));
+              total = fromNano(maxBalance);
+            } else {
+              total = fromNano(toNano(amount.value) + toNano(fee));
+            }
           }
+        } else {
+          total = fromNano(result.fee.total_output);
         }
         if (fee == 0) {
           disabled = true;
@@ -195,12 +230,9 @@
   };
 
   const confirmTransaction = () => {
-    openModal("ModalConfirmTransaction", {
-      id: modalData.id,
-      accountAddress: $currentAccount.address,
-      server: $currentNetwork.server,
-      fee: fee,
-      txData: {
+    let txData;
+    if (isNative) {
+      txData = {
         type: "send",
         params: {
           amount: toNano(amount.value),
@@ -208,7 +240,24 @@
           destination: destination.dataset.value,
           allBalance: allBalance,
         },
-      },
+      };
+    } else {
+      txData = {
+        type: "sendToken",
+        params: {
+          amount: toNano(amount.value),
+          message: message.value,
+          destination: destination.dataset.value,
+          token: modalData.token
+        },
+      };
+    }
+    openModal("ModalConfirmTransaction", {
+      id: modalData.id,
+      accountAddress: $currentAccount.address,
+      server: $currentNetwork.server,
+      fee: fee,
+      txData: txData,
     });
   };
 
@@ -216,6 +265,13 @@
 </script>
 
 <style>
+  .token-logo {
+    width: 48px;
+    height: 48px;
+    border: var(--color-black) dashed 1px;
+    margin: 0.5rem;
+    border-radius: 50%;
+  }
   .sending-tx-total-wrapper {
     align-content: center;
     display: flex;
@@ -235,10 +291,20 @@
   #sending-tx-total {
     margin-left: 1rem;
   }
+  .title {
+    margin: 0px;
+  }
+  .container {
+    line-height: 1.3;
+  }
 </style>
 
-<div class="sending-tx flex-column">
-  <h6>{$_('Send transaction')}</h6>
+<div class="flex-column container">
+  <h6 class="title">{$_('Send transaction')}</h6>
+  <div class="is-center">
+    <img alt="logo" class="token-logo" src="{icon}"/><br/>
+    <span title="{title}">{symbol}</span>
+  </div>
   <Field label={$_('Address')}>
     <Select
       id="sending-tx-destination"

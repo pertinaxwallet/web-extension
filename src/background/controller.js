@@ -25,8 +25,28 @@ export const controller = () => {
     return {"success": false, "error": "Network is existed"};
   };
 
-  const removeNetwork = async (server) => {
-    await networksController.removeNetwork(server);
+  const removeNetworks = async (servers) => {
+    for (let i in servers) {
+      await networksController.removeNetwork(servers[i]);
+    }
+    broadcastMessage('updateNetworks', true);
+    return true;
+  };
+
+  const removeTokens = async (tokens) => {
+    const accountAddress = await new Promise((resolve) => {
+      currentAccount.subscribe((value) => {
+        resolve(value.address);
+      });
+    });
+    const server = await new Promise((resolve) => {
+      currentNetwork.subscribe((value) => {
+        resolve(value.server);
+      });
+    });
+    for (let i in tokens) {
+      await accountsController.removeToken(accountAddress, server, tokens[i]);
+    }
     broadcastMessage('updateNetworks', true);
     return true;
   };
@@ -130,6 +150,26 @@ export const controller = () => {
       };
       browser.runtime.onMessage.addListener(listener);
     });
+  };
+
+  const calculateFee = async (accountAddress, server, txData) => {
+    if (txData.type == 'send') {
+      return await accountsController.calculateFeeForSafeMultisig(accountAddress, server, txData);
+    }
+    if (txData.type == 'sendToken') {
+      const keyPair = await accountsController.getKeyPairForAccount(accountAddress);
+      return await accountsController.calculateFeeForToken(accountAddress, server, txData, keyPair);
+    }
+  };
+
+  const runTransaction = async (accountAddress, server, txData) => {
+    if (txData.type == 'send') {
+      return await accountsController.sendTransaction(accountAddress, server, txData);
+    }
+    if (txData.type == 'sendToken') {
+      const keyPair = await accountsController.getKeyPairForAccount(accountAddress);
+      return await accountsController.transferToken(accountAddress, server, txData, keyPair);
+    }
   };
 
   const sendTransaction = async (data, origin) => {
@@ -428,6 +468,31 @@ export const controller = () => {
     return {"id": data.id, "data": { code: 4000, data: result}};
   };
 
+  const getFamousTokens = (server) => {
+    return accountsController.getFamousTokens()[server];
+  };
+
+  const importToken = async (data) => {
+    const account = await new Promise((resolve) => {
+      currentAccount.subscribe(async (value) => {
+        resolve(value.address);
+      });
+    });
+
+    return await accountsController.importToken(account, data.server, {
+      "name": data.name,
+      "symbol": data.symbol,
+      "decimals": data.decimals,
+      "address": data.address,
+      "icon": data.icon,
+      "type": data.type
+    });
+  };
+
+  const getTokenListForUser = async (data) => {
+    return await accountsController.getTokenListForUser(data.accountAddress, data.server);
+  };
+
   return {
     "accounts": accountsController,
     "networks": networksController,
@@ -442,7 +507,9 @@ export const controller = () => {
     changeAccount,
     getCurrentAccount,
     getCurrentEndpoint,
+    calculateFee,
     sendTransaction,
+    runTransaction,
     signMessage,
     getSignForData,
     getMessageSignature,
@@ -461,8 +528,12 @@ export const controller = () => {
     getSignature,
     addNewNetwork,
     changeNetwork,
-    removeNetwork,
+    removeNetworks,
+    removeTokens,
     getSubscriptionId,
-    removeSubscriptionId
+    removeSubscriptionId,
+    getFamousTokens,
+    importToken,
+    getTokenListForUser
   };
 };

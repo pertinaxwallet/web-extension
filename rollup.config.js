@@ -134,7 +134,7 @@ const config = [{
     format: 'iife'
   },
   plugins: [
-    copy({targets: [{ src: './node_modules/@tonclient/lib-web/tonclient.wasm', dest: 'dist/' }]}),
+    copy({targets: [{ src: './node_modules/@eversdk/lib-web/eversdk.wasm', dest: 'dist/' }]}),
     commonjs(),
     json(),
     !production && watchAssets({ assets: ['src'] }),
