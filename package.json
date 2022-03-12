@@ -1,6 +1,6 @@
 {
   "name": "pertinaxwallet",
-  "version": "1.0.13",
+  "version": "2.0.0",
   "description": "The browser extension for Everscale blockchain.",
   "author": "pertinax wallet team <support@pertinaxwallet.com>",
   "license": "Apache-2.0",
