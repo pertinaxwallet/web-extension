@@ -1,6 +1,6 @@
 {
   "homepage_url": "https://pertinaxwallet.com/",
-  "version": "1.0.13",
+  "version": "2.0.0",
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
@@ -26,14 +26,12 @@
     "scripts": ["chromereload.js", "browser-polyfill.js", "background.js"],
     "persistent": true
   },
-  "content_scripts": [
-    {
-      "matches": ["file://*/*", "http://*/*", "https://*/*"],
-      "js": ["browser-polyfill.js", "content.js"],
-      "run_at": "document_start",
-      "all_frames": true
-    }
-  ],
+  "content_scripts": [{
+    "matches": ["file://*/*", "http://*/*", "https://*/*"],
+    "js": ["browser-polyfill.js", "content.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }],
   "browser_action": {
     "default_icon": "assets/img/icon-32.png",
     "default_title": "Pertinax wallet",

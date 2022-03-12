@@ -1,6 +1,6 @@
 {
   "name": "pertinaxwallet",
-  "version": "2.0.0",
+  "version": "1.0.13",
   "description": "The browser extension for Everscale blockchain.",
   "author": "pertinax wallet team <support@pertinaxwallet.com>",
   "license": "Apache-2.0",
@@ -13,7 +13,7 @@
     "test-firstrun": "mocha --recursive --timeout 30000 tests/e2e/firstrun/*.js",
     "test-dapps": "mocha --recursive --timeout 30000 tests/e2e/dapp/*.js",
     "run-tonos": "docker run -d --name local-node -e USER_AGREEMENT=yes -p7777:80 tonlabs/local-node",
-    "version": "gulp patchVersion && auto-changelog -p -l 20 -t keepachangelog"
+    "version": "gulp patchVersion && auto-changelog -p -b 20 -l 20 -t keepachangelog --starting-version v2.0.0"
   },
   "repository": {
     "type": "git",
@@ -62,8 +62,8 @@
   },
   "dependencies": {
     "@mdi/js": "^5.9.55",
-    "@eversdk/core": "^1.30.1",
-    "@eversdk/lib-web": "^1.30.1",
+    "@tonclient/core": "^1.28.0",
+    "@tonclient/lib-web": "^1.28.0",
     "bignumber.js": "^9.0.1",
     "chota": "^0.8.0",
     "eventemitter3": "^4.0.7",
