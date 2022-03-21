@@ -306,5 +306,7 @@
   "Manage networks": "Pārvaldīt tīklus",
   "Manage tokens": "Pārvaldīt žetonus",
   "Tokens": "Žetoni",
-  "Networks": "Tīkli"
+  "Networks": "Tīkli",
+  "No tokens that you can remove": "Nav žetonu, ka jūs varat noņemt",
+  "No networks that you can remove": "Nav tīkliem, kurus jūs varat noņemt"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "مدیریت شبکه ها",
   "Manage tokens": "مدیریت نشانه ها",
   "Tokens": "نشانه ها",
-  "Networks": "شبکه های"
+  "Networks": "شبکه های",
+  "No tokens that you can remove": "بدون نشانه ای که می توانید حذف کنید",
+  "No networks that you can remove": "هیچ شبکه ای که می توانید حذف کنید"
 }

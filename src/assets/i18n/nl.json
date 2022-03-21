@@ -306,5 +306,7 @@
   "Manage networks": "Beheer netwerken",
   "Manage tokens": "Beheer tokens",
   "Tokens": "Munten",
-  "Networks": "Netwerken"
+  "Networks": "Netwerken",
+  "No tokens that you can remove": "Geen tokens die je kunt verwijderen",
+  "No networks that you can remove": "Geen netwerken die u kunt verwijderen"
 }

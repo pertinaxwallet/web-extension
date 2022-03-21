@@ -306,5 +306,7 @@
   "Manage networks": "Pamahalaan ang mga network",
   "Manage tokens": "Pamahalaan ang mga token.",
   "Tokens": "Mga token.",
-  "Networks": "Mga network"
+  "Networks": "Mga network",
+  "No tokens that you can remove": "Walang mga token na maaari mong alisin",
+  "No networks that you can remove": "Walang mga network na maaari mong alisin"
 }

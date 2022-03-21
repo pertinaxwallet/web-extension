@@ -306,5 +306,7 @@
   "Manage networks": "Manage networks",
   "Manage tokens": "Manage tokens",
   "Tokens": "Tokens",
-  "Networks": "Networks"
+  "Networks": "Networks",
+  "No tokens that you can remove": "No tokens that you can remove",
+  "No networks that you can remove": "No networks that you can remove"
 }

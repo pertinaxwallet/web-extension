@@ -306,5 +306,7 @@
   "Manage networks": "Управление сетями",
   "Manage tokens": "Управление токенами",
   "Tokens": "Токены",
-  "Networks": "Сети"
+  "Networks": "Сети",
+  "No tokens that you can remove": "Нет токенов которые вы можете удалить",
+  "No networks that you can remove": "Нет сетей которые вы можете удалить"
 }

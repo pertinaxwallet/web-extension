@@ -306,5 +306,7 @@
   "Manage networks": "Gestionați rețelele",
   "Manage tokens": "Gestionați jetoanele",
   "Tokens": "Tokens.",
-  "Networks": "Rețele"
+  "Networks": "Rețele",
+  "No tokens that you can remove": "Nu există jetoane pe care le puteți elimina",
+  "No networks that you can remove": "Nu există rețele pe care le puteți elimina"
 }

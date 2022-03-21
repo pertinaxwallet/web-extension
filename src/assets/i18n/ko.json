@@ -306,5 +306,7 @@
   "Manage networks": "네트워크 관리",
   "Manage tokens": "토큰 관리",
   "Tokens": "토큰",
-  "Networks": "네트워크"
+  "Networks": "네트워크",
+  "No tokens that you can remove": "제거 할 수있는 토큰이 없습니다",
+  "No networks that you can remove": "제거 할 수있는 네트워크가 없습니다"
 }

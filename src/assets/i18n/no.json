@@ -306,5 +306,7 @@
   "Manage networks": "Administrer nettverk",
   "Manage tokens": "Administrere tokens",
   "Tokens": "Tokens",
-  "Networks": "Nettverk"
+  "Networks": "Nettverk",
+  "No tokens that you can remove": "Ingen tokens som du kan fjerne",
+  "No networks that you can remove": "Ingen nettverk som du kan fjerne"
 }

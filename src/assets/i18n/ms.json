@@ -306,5 +306,7 @@
   "Manage networks": "Urus rangkaian",
   "Manage tokens": "Menguruskan token.",
   "Tokens": "Token.",
-  "Networks": "Rangkaian"
+  "Networks": "Rangkaian",
+  "No networks that you can remove": "Tiada token yang boleh anda keluarkan",
+  "No networks that you can remove": "Tiada rangkaian yang boleh anda alih keluar"
 }

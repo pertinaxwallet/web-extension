@@ -306,5 +306,7 @@
   "Manage networks": "Gestire le reti",
   "Manage tokens": "Gestisci i tokens.",
   "Tokens": "Tokens.",
-  "Networks": "Reti"
+  "Networks": "Reti",
+  "No tokens that you can remove": "Nessun segno che puoi rimuovere",
+  "No networks that you can remove": "Nessuna rete che puoi rimuovere"
 }

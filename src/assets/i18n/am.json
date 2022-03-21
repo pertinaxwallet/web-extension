@@ -306,5 +306,7 @@
   "Manage networks": "አውታረ መረቦችን ያቀናብሩ",
   "Manage tokens": "ቶኬቶችን ያቀናብሩ",
   "Tokens": "ማስመሰያዎች",
-  "Networks": "አውታረመረቦች"
+  "Networks": "አውታረመረቦች",
+  "No tokens that you can remove": "ሊያስወግዱት የሚችሏቸውን መርጃዎች የሉም",
+  "No networks that you can remove": "ማስወገድ የሚችሉት ምንም አውታረመረቦች የሉም"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "Управљање мрежама",
   "Manage tokens": "Управљање жетонима",
   "Tokens": "Токени",
-  "Networks": "Мреже"
+  "Networks": "Мреже",
+  "No tokens that you can remove": "Нема токена које можете уклонити",
+  "No networks that you can remove": "Нема мрежа које можете уклонити"
 }

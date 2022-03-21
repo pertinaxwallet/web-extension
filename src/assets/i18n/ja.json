@@ -306,5 +306,7 @@
   "Manage networks": "ネットワークを管理する",
   "Manage tokens": "トークンを管理します",
   "Tokens": "トークン",
-  "Networks": "ネットワーク"
+  "Networks": "ネットワーク",
+  "No networks that you can remove": "削除できるトークンはありません",
+  "No networks that you can remove": "削除できるネットワークはありません"
 }

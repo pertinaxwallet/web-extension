@@ -306,5 +306,7 @@
   "Manage networks": "ನೆಟ್ವರ್ಕ್ಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
   "Manage tokens": "ಟೋಕನ್ಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
   "Tokens": "ಕಪಾಟು",
-  "Networks": "ಜಾಲಗಳು"
+  "Networks": "ಜಾಲಗಳು",
+  "No networks that you can remove": "ನೀವು ತೆಗೆದುಹಾಕಬಹುದಾದ ಯಾವುದೇ ಟೋಕನ್ಗಳು ಇಲ್ಲ",
+  "No networks that you can remove": "ನೀವು ತೆಗೆದುಹಾಕುವ ನೆಟ್ವರ್ಕ್ಗಳು ​​ಇಲ್ಲ"
 }

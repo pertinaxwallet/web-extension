@@ -306,5 +306,7 @@
   "Manage networks": "নেটওয়ার্ক পরিচালনা করুন",
   "Manage tokens": "টোকেন পরিচালনা করুন",
   "Tokens": "টোকেন",
-  "Networks": "নেটওয়ার্ক"
+  "Networks": "নেটওয়ার্ক",
+  "No tokens that you can remove": "আপনি অপসারণ করতে পারেন যে কোন টোকেন",
+  "No networks that you can remove": "কোন নেটওয়ার্ক আপনি অপসারণ করতে পারেন"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "Valdykite tinklus",
   "Manage tokens": "Valdyti žetonus",
   "Tokens": "Žetonai",
-  "Networks": "Tinklai"
+  "Networks": "Tinklai",
+  "No tokens that you can remove": "Nėra žetonų, kuriuos galite pašalinti",
+  "No networks that you can remove": "Nėra tinklų, kuriuos galite pašalinti"
 }

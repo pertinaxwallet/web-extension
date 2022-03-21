@@ -307,4 +307,6 @@
   "Manage tokens": "Upravljanje žetonov",
   "Tokens": "Žetonov",
   "Networks": "Omrežja",
+  "No tokens that you can remove": "Brez žetonov, ki jih lahko odstranite",
+  "No networks that you can remove": "Brez omrežij, ki jih lahko odstranite"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "إدارة الشبكات",
   "Manage tokens": "إدارة الرموز",
   "Tokens": "الرموز",
-  "Networks": "الشبكات"
+  "Networks": "الشبكات",
+  "No tokens that you can remove": "لا الرموز التي يمكنك إزالة",
+  "No networks that you can remove": "لا شبكات يمكنك إزالتها"
 }

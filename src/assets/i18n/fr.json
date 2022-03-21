@@ -306,5 +306,7 @@
   "Manage networks": "Gérer les réseaux",
   "Manage tokens": "Gérer les jetons",
   "Tokens": "Jetons",
-  "Networks": "Réseaux"
+  "Networks": "Réseaux",
+  "No tokens that you can remove": "Pas de jetons que vous pouvez supprimer",
+  "No networks that you can remove": "Aucun réseaux que vous pouvez supprimer"
 }

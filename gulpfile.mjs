@@ -1,10 +1,12 @@
-const gulp = require('gulp');
-const jsoneditor = require('gulp-json-editor');
-const zip = require('gulp-zip');
-const del = require('del');
-const manifest = require('./src/manifest.json');
-const gulpMultiProcess = require('gulp-multi-process');
-const imagemin = require('gulp-imagemin');
+import gulp from 'gulp';
+import imagemin from 'gulp-imagemin';
+import jsoneditor from 'gulp-json-editor';
+import zip from 'gulp-zip';
+import del from 'del';
+import { readFileSync } from 'fs';
+const manifest = JSON.parse(readFileSync('./src/manifest.json'));
+
+import gulpMultiProcess from 'gulp-multi-process';
 
 function gulpParallel (...args) {
   return function spawnGulpChildProcess (cb) {

@@ -306,5 +306,7 @@
   "Manage networks": "Gestionar xarxes",
   "Manage tokens": "Gestionar fitxes",
   "Tokens": "Fitxes",
-  "Networks": "Xarxes"
+  "Networks": "Xarxes",
+  "No tokens that you can remove": "No hi ha fitxes que pugueu treure",
+  "No networks that you can remove": "No hi ha xarxes que pugueu treure"
 }

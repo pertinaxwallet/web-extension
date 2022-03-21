@@ -306,5 +306,7 @@
   "Manage networks": "Kelola jaringan",
   "Manage tokens": "Kelola Token",
   "Tokens": "Token",
-  "Networks": "Jaringan"
+  "Networks": "Jaringan",
+  "No tokens that you can remove": "Tidak ada token yang dapat Anda hapus",
+  "No networks that you can remove": "Tidak ada jaringan yang dapat Anda hapus"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "નેટવર્ક મેનેજ કરો",
   "Manage tokens": "ટોકન્સ મેનેજ કરો",
   "Tokens": "ટોકન્સ",
-  "Networks": "નેટવર્ક્સ"
+  "Networks": "નેટવર્ક્સ",
+  "No tokens that you can remove": "કોઈ ટોકન્સ કે જે તમે દૂર કરી શકો છો",
+  "No networks that you can remove": "કોઈ નેટવર્ક્સ કે જે તમે દૂર કરી શકો છો"
 }

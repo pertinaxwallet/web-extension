@@ -306,5 +306,7 @@
   "Manage networks": "จัดการเครือข่าย",
   "Manage tokens": "จัดการโทเค็น",
   "Tokens": "โทเค็น",
-  "Networks": "เครือข่าย"
+  "Networks": "เครือข่าย",
+  "No tokens that you can remove": "ไม่มีโทเค็นที่คุณสามารถลบได้",
+  "No networks that you can remove": "ไม่มีเครือข่ายที่คุณสามารถลบได้"
 }

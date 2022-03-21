@@ -306,5 +306,7 @@
   "Manage networks": "नेटवर्क व्यवस्थापित करा",
   "Manage tokens": "टोकन व्यवस्थापित करा",
   "Tokens": "टोकन",
-  "Networks": "नेटवर्क"
+  "Networks": "नेटवर्क",
+  "No tokens that you can remove": "आपण काढू शकता की टोकन नाही",
+  "No networks that you can remove": "आपण काढू शकत नाही अशा नेटवर्क नाहीत"
 }

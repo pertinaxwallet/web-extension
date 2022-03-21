@@ -306,5 +306,7 @@
   "Manage networks": "Управління мережами",
   "Manage tokens": "Керуйте маркерами",
   "Tokens": "Токени",
-  "Networks": "Мережі"
+  "Networks": "Мережі",
+  "No tokens that you can remove": "Немає маркерів, які ви можете видалити",
+  "No networks that you can remove": "Немає мереж, які ви можете видалити"
 }

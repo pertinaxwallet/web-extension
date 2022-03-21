@@ -306,5 +306,7 @@
   "Manage networks": "ניהול רשתות",
   "Manage tokens": "לנהל אסימונים",
   "Tokens": "אסימונים",
-  "Networks": "רשתות"
+  "Networks": "רשתות",
+  "No tokens that you can remove": "לא אסימונים שאתה יכול להסיר",
+  "No networks that you can remove": "אין רשתות שאתה יכול להסיר"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "Hallinnoi verkkoja",
   "Manage tokens": "Hallita rahakkeita",
   "Tokens": "Rahakkeita",
-  "Networks": "Verkot"
+  "Networks": "Verkot",
+  "No tokens that you can remove": "Ei merkkejä, joita voit poistaa",
+  "No networks that you can remove": "Ei verkkoja, joita voit poistaa"
 }

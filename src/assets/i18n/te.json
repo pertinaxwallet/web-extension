@@ -306,5 +306,7 @@
   "Manage networks": "నెట్వర్క్లను నిర్వహించండి",
   "Manage tokens": "టోకెన్లను నిర్వహించండి",
   "Tokens": "టోకెన్లు",
-  "Networks": "నెట్వర్క్లు"
+  "Networks": "నెట్వర్క్లు",
+  "No tokens that you can remove": "మీరు తొలగించగల టోకెన్లు లేవు",
+  "No networks that you can remove": "మీరు తొలగించగల నెట్వర్క్లు లేవు"
 }

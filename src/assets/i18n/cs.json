@@ -306,5 +306,7 @@
   "Manage networks": "Správa sítí",
   "Manage tokens": "Správa tokenů",
   "Tokens": "Tokens.",
-  "Networks": "Sítě"
+  "Networks": "Sítě",
+  "No tokens that you can remove": "Žádné tokeny, které můžete odstranit",
+  "No networks that you can remove": "Žádné sítě, které můžete odstranit"
 }

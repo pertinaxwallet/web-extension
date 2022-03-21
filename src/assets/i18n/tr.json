@@ -306,5 +306,7 @@
   "Manage networks": "Ağları yönet",
   "Manage tokens": "Belirteçleri yönet",
   "Tokens": "Belirteç",
-  "Networks": "Ağlar"
+  "Networks": "Ağlar",
+  "No tokens that you can remove": "Kaldırabileceğiniz belirteçleri yok",
+  "No networks that you can remove": "Kaldırabileceğiniz ağ yok"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "Διαχειριστείτε δίκτυα",
   "Manage tokens": "Διαχειριστείτε τα μάρκες",
   "Tokens": "Μάρκες",
-  "Networks": "Δίκτυα"
+  "Networks": "Δίκτυα",
+  "No tokens that you can remove": "Δεν υπάρχουν μάρκες που μπορείτε να αφαιρέσετε",
+  "No networks that you can remove": "Δεν υπάρχουν δίκτυα που μπορείτε να καταργήσετε"
 }

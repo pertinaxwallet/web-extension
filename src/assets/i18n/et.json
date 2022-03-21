@@ -306,5 +306,7 @@
   "Manage networks": "Võrkude haldamine",
   "Manage tokens": "Halda märgid",
   "Tokens": "Märgid",
-  "Networks": "Võrgustikud"
+  "Networks": "Võrgustikud",
+  "No tokens that you can remove": "Nr märgid, mida saate eemaldada",
+  "No networks that you can remove": "Nr võrgud, mida saate eemaldada"
 }

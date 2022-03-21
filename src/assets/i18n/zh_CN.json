@@ -306,5 +306,7 @@
   "Manage networks": "管理网络",
   "Manage tokens": "管理令牌",
   "Tokens": "令牌",
-  "Networks": "网络"
+  "Networks": "网络",
+  "No tokens that you can remove": "没有你可以删除的令牌",
+  "No networks that you can remove": "没有您可以删除的网络"
 }

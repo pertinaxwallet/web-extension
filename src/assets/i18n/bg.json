@@ -306,5 +306,7 @@
   "Manage networks": "Управление на мрежи",
   "Manage tokens": "Управление на символите",
   "Tokens": "Символи",
-  "Networks": "Мрежи"
+  "Networks": "Мрежи",
+  "No tokens that you can remove": "Няма символи, които можете да премахнете",
+  "No networks that you can remove": "Няма мрежи, които можете да премахнете"
 }

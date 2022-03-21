@@ -306,5 +306,7 @@
   "Manage networks": "Quản lý mạng",
   "Manage tokens": "Quản lý mã thông báo",
   "Tokens": "Tokens.",
-  "Networks": "Mạng"
+  "Networks": "Mạng",
+  "No tokens that you can remove": "Không có mã thông báo nào bạn có thể loại bỏ",
+  "No networks that you can remove": "Không có mạng mà bạn có thể loại bỏ"
 }

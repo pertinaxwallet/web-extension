@@ -306,5 +306,7 @@
   "Manage networks": "நெட்வொர்க்குகளை நிர்வகி",
   "Manage tokens": "டோக்கன்களை நிர்வகிக்கவும்",
   "Tokens": "டோக்கன்கள்",
-  "Networks": "நெட்வொர்க்குகள்"
+  "Networks": "நெட்வொர்க்குகள்",
+  "No tokens that you can remove": "நீங்கள் நீக்க முடியும் என்று டோக்கன்கள் இல்லை",
+  "No networks that you can remove": "நீங்கள் நீக்கக்கூடிய நெட்வொர்க்குகள் இல்லை"
 }

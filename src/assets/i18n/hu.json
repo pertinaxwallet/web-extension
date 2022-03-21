@@ -306,5 +306,7 @@
   "Manage networks": "Hálózatok kezelése",
   "Manage tokens": "Tokenek kezelése",
   "Tokens": "Tokens",
-  "Networks": "Hálózatok"
+  "Networks": "Hálózatok",
+  "No tokens that you can remove": "Nem lehet eltávolítani",
+  "No networks that you can remove": "Nincs olyan hálózatok, amelyeket eltávolíthatsz"
 }

@@ -306,5 +306,7 @@
   "Manage networks": "Administrar redes",
   "Manage tokens": "Administrar tokens",
   "Tokens": "Tokens",
-  "Networks": "Redes"
+  "Networks": "Redes",
+  "No tokens that you can remove": "No hay fichas que puedas quitar.",
+  "No networks that you can remove": "No hay redes que puedas quitar."
 }

@@ -306,5 +306,7 @@
   "Manage networks": "Dhibiti mitandao",
   "Manage tokens": "Dhibiti Tokens.",
   "Tokens": "Ishara",
-  "Networks": "Mitandao"
+  "Networks": "Mitandao",
+  "No tokens that you can remove": "Hakuna ishara ambazo unaweza kuondoa",
+  "No networks that you can remove": "Hakuna mitandao ambayo unaweza kuondoa"
 }
