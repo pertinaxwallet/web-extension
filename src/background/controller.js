@@ -1,8 +1,8 @@
 import { accounts } from './accounts.js';
 import { networks } from './networks.js';
 import { sdk } from './sdk.js';
-import { broadcastMessage, sendNotificationToInPageScript, openRequestPopup, closeRequestPopup } from '../common/utils.js';
-import { settingsStore, accountStore, currentAccount, networksStore, currentNetwork, currentEnabledPinPad } from "../common/stores.js";
+import { broadcastMessage, sendNotificationToInPageScript, openRequestPopup, closeRequestPopup, fromNano, gte, lt } from '../common/utils.js';
+import { APPROXIMATE_FEE, settingsStore, accountStore, currentAccount, networksStore, currentNetwork, currentEnabledPinPad } from "../common/stores.js";
 
 export const controller = () => {
   const accountsController = Object.freeze(accounts());
@@ -173,18 +173,37 @@ export const controller = () => {
   };
 
   const sendTransaction = async (data, origin) => {
-    openRequestPopup('ModalSendingTransaction', data);
-    return new Promise((resolve, reject) => {
-      const listener = (message) => {
-        if (message.type === "popupMessageResponse" && message.id == data.id) {
-          // let's remove this listener in 1 seconds after a response
-          setTimeout(browser.runtime.onMessage.removeListener(listener), 1000);
-          closeRequestPopup();
-          resolve({"id": data.id, "data": message.data});
-        }
-      };
-      browser.runtime.onMessage.addListener(listener);
+    const endpoint = await new Promise((resolve) => {
+      currentNetwork.subscribe((value) => {
+        resolve(value.server);
+      });
     });
+    const balance = await new Promise((resolve) => {
+      currentAccount.subscribe((value) => {
+        resolve(value.balance[endpoint]);
+      });
+    });
+    if (lt(fromNano(balance), data.params.amount + APPROXIMATE_FEE)) {
+      return new Promise((resolve, reject) => {
+            resolve({"id": data.id, "data": {
+              code: 4300,
+              message: "Not enough balance",
+            }});
+      });
+    } else {
+      openRequestPopup('ModalSendingTransaction', data);
+      return new Promise((resolve, reject) => {
+        const listener = (message) => {
+          if (message.type === "popupMessageResponse" && message.id == data.id) {
+            // let's remove this listener in 1 seconds after a response
+            setTimeout(browser.runtime.onMessage.removeListener(listener), 1000);
+            closeRequestPopup();
+            resolve({"id": data.id, "data": message.data});
+          }
+        };
+        browser.runtime.onMessage.addListener(listener);
+      });
+    }
   };
 
   const getProviderState = async (data, origin) => {

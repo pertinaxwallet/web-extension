@@ -488,6 +488,10 @@ export const accounts = () => {
         let result;
         if (full) {
           account.encrypted = await encrypt(currentPassword, account.keyPair);
+          //stores only in encrypted form
+          delete account.keyPair;
+          //removes technical detail
+          delete account.checked;
           account.deployed  = await checkSafeMultisigDeployed(account.address);
           result = await vault.addNewAccount(account);
         } else {
@@ -795,11 +799,11 @@ export const accounts = () => {
    * Tokens
    */
   const getFamousTokens = () => {
-    return {"main.ton.dev": [
+    return {"main.everos.dev": [
             /*
             {
-              "name": "Wrapped TON",
-              "symbol": "WTON",
+              "name": "Wrapped EVER",
+              "symbol": "WEVER",
               "decimals": 9,
               "address": "",
               "icon": "",

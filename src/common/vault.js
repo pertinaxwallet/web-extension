@@ -15,7 +15,7 @@ export class Vault {
       }
     });
 
-    this.db = await openDB('vault', 4, {
+    this.db = await openDB('vault', 5, {
       async upgrade(db, oldVersion, newVersion, transaction) {
         if (await checkMigration(db, oldVersion, newVersion, transaction)) {
           return;
@@ -28,14 +28,14 @@ export class Vault {
         /*
         { address: "0:123",
           nickname: "main",
-          balance: {"main.ton.dev": 5000000000},
-          transactions: {"main.ton.dev": [{...}]},
+          balance: {"main.everos.dev": 5000000000},
+          transactions: {"main.everos.dev": [{...}]},
           permissions: {"domain.com": ['ever_address', 'ever_endpoint']},
           updatedDate: 123123,
           createdDate: 123123,
-          contactList: {"main.ton.dev": ["0:11", "0:12"]},
-          contractList: {"main.ton.dev": ["0:21", "0:22"]},
-          tokenList: {"main.ton.dev": [{"address": "0:31"}, {"address": "0:32"}]},
+          contactList: {"main.everos.dev": ["0:11", "0:12"]},
+          contractList: {"main.everos.dev": ["0:21", "0:22"]},
+          tokenList: {"main.everos.dev": [{"address": "0:31"}, {"address": "0:32"}]},
           deployed: [], // server list on which was deployed
           encrypted: { //this object is encrypted
             privKey: "e3412345fcd",
@@ -57,11 +57,13 @@ export class Vault {
         /*
         { id: 1,
           name: "Main",
-          server: "main.ton.dev",
-          explorer: "https://ton.live",
-          endpoints: ["https://main2.ton.dev",
-                      "https://main3.ton.dev",
-                      "https://main4.ton.dev"],
+          server: "main.everos.dev",
+          explorer: "https://ever.live",
+          endpoints: ["https://eri01.main.everos.dev",
+                      "https://gra01.main.everos.dev",
+                      "https://gra02.main.everos.dev",
+                      "https://lim01.main.everos.dev",
+                      "https://rbx01.main.everos.dev"],
           test: false,
           giver: "",
           coinName: "EVER",
@@ -71,11 +73,13 @@ export class Vault {
         const networks = [
           { id: 1,
             name: "Main",
-            server: "main.ton.dev",
-            explorer: "https://ton.live",
-            endpoints: ["https://main2.ton.dev",
-                        "https://main3.ton.dev",
-                        "https://main4.ton.dev"],
+            server: "main.everos.dev",
+            explorer: "https://ever.live",
+            endpoints: ["https://eri01.main.everos.dev",
+                        "https://gra01.main.everos.dev",
+                        "https://gra02.main.everos.dev",
+                        "https://lim01.main.everos.dev",
+                        "https://rbx01.main.everos.dev"],
             test: false,
             giver: "",
             coinName: "EVER",
@@ -84,10 +88,11 @@ export class Vault {
           {
             id: 2,
             name: "Test",
-            server: "net.ton.dev",
-            explorer: "https://net.ton.live",
-            endpoints: ["https://net1.ton.dev",
-                        "https://net5.ton.dev"],
+            server: "net.everos.dev",
+            explorer: "https://net.ever.live",
+            endpoints: ["https://eri01.net.everos.dev",
+                        "https://rbx01.net.everos.dev",
+                        "https://gra01.net.everos.dev"],
             test: true,
             giver: "",
             coinName: "RUBY",
@@ -519,6 +524,76 @@ async function checkMigration(db, oldVersion, newVersion, transaction) {
     const mainNetwork = await store.get("main.ton.dev");
     mainNetwork.coinName = "EVER";
     await store.put(mainNetwork);
+    return true;
+  }
+
+  // change endpoints, networks name, explorers
+  if (oldVersion == 4 && newVersion == 5) {
+    const storeNetworks = transaction.objectStore('networks');
+
+    //copies the old main network and creates with the new server name
+    const mainNetwork = await storeNetworks.get("main.ton.dev");
+    mainNetwork.server    = "main.everos.dev",
+    mainNetwork.explorer  = "https://ever.live",
+    mainNetwork.endpoints = ["https://eri01.main.everos.dev",
+                            "https://gra01.main.everos.dev",
+                            "https://gra02.main.everos.dev",
+                            "https://lim01.main.everos.dev",
+                            "https://rbx01.main.everos.dev"];
+
+    await storeNetworks.put(mainNetwork);
+
+    //removes the main network with the old server name
+    await storeNetworks.delete("main.ton.dev");
+
+    //copies the old dev network and creates with the new server name
+    const devNetwork = await storeNetworks.get("net.ton.dev");
+
+    devNetwork.server    = "net.everos.dev";
+    devNetwork.explorer  = "https://net.ever.live";
+    devNetwork.endpoints = [ "https://eri01.net.everos.dev",
+                             "https://rbx01.net.everos.dev",
+                             "https://gra01.net.everos.dev"];
+
+    //removes the dev network with the old server name
+    await storeNetworks.put(devNetwork);
+
+    await storeNetworks.delete("net.ton.dev");
+
+    const storeAccounts = transaction.objectStore('accounts');
+    const allAccounts = await storeAccounts.getAll();
+    const networks = [{"old": "main.ton.dev", "new": "main.everos.dev"}, {"old": "net.ton.dev", "new": "net.everos.dev"}];
+    for (let i in allAccounts) {
+      for (let j in networks) {
+        if (typeof allAccounts[i].balance[networks[j].old] != "undefined") {
+          allAccounts[i].balance[networks[j].new] = allAccounts[i].balance[networks[j].old];
+        }
+        if (typeof allAccounts[i].transactions[networks[j].old] != "undefined") {
+          allAccounts[i].transactions[networks[j].new] = allAccounts[i].transactions[networks[j].old];
+        }
+        if (typeof allAccounts[i].contactList[networks[j].old] != "undefined") {
+          allAccounts[i].contactList[networks[j].new] = allAccounts[i].contactList[networks[j].old];
+        }
+        if (typeof allAccounts[i].contractList[networks[j].old] != "undefined") {
+          allAccounts[i].contractList[networks[j].new] = allAccounts[i].contractList[networks[j].old];
+        }
+        if (typeof allAccounts[i].tokenList[networks[j].old] != "undefined") {
+          allAccounts[i].tokenList[networks[j].new] = allAccounts[i].tokenList[networks[j].old];
+        }
+        if (allAccounts[i].deployed.includes(networks[j].old)) {
+          allAccounts[i].deployed.push(networks[j].new);
+        }
+      }
+      //need to fix bug when imports from a file
+      if (typeof allAccounts[i].keyPair != "undefined") {
+        delete allAccounts[i].keyPair;
+      }
+      if (typeof allAccounts[i].checked != "undefined") {
+        delete allAccounts[i].checked;
+      }
+      await storeAccounts.put(allAccounts[i]);
+    }
+
     return true;
   }
 

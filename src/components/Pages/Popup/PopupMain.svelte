@@ -353,7 +353,7 @@
     .tx-data {
       flex-direction: column;
       display: flex;
-      width: 150px;
+      width: 130px;
       .tx-date {
         font-size: 1rem;
       }

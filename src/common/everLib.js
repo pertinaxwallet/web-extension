@@ -18,7 +18,7 @@ class EverLib {
     this.vault.init();
   }
 
-  async getClient(server = "main.ton.dev") {
+  async getClient(server = "main.everos.dev") {
     const network = await this.vault.getNetwork(server);
     if (this.instance == null || network.endpoints.filter(x => this.instance.config.network.endpoints.includes(x)).length == 0) {
       this.instance = new this.everClient({
@@ -337,7 +337,7 @@ class EverLib {
       const encoded_message = await this.encodeMessage(address, functionName, abi, input, keyPair);
       const result = await this.instance.tvm.run_executor({
         message: encoded_message.message,
-        account: accountForExecutorAccount(boc, true),
+        account: accountForExecutorAccount(boc, false),
         abi: abiContract(abi),
         skip_transaction_check: false,
         return_updated_account: false

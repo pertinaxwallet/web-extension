@@ -392,6 +392,16 @@ const copyToClipboard = ( text ) => {
   document.body.removeChild(dummy);
 };
 
+//compare two number, will be true if amount1 greater or equal than amount2
+const gte = (amount1, amount2) => {
+  return new BigNumber(amount1).gte(amount2);
+};
+
+//compare two number, will be true if amount1 lower than amount2
+const lt = (amount1, amount2) => {
+  return new BigNumber(amount1).lt(amount2);
+};
+
 const fromNano = (amount, num = 4) => {
   return new BigNumber(amount).div(10**9).toFixed(num);
 };
@@ -454,6 +464,8 @@ export {
   generateSalt,
   shortAddress,
   copyToClipboard,
+  gte,
+  lt,
   fromNano,
   toNano,
   fromDecimal

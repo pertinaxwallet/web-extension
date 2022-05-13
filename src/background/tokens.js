@@ -14,11 +14,11 @@ export const tokens = () => {
   vault.init();
 
   const getFamousTokens = () => {
-    return {"main.ton.dev": [
+    return {"main.everos.dev": [
             /*
             {
-              "name": "Wrapped TON",
-              "symbol": "WTON",
+              "name": "Wrapped EVER",
+              "symbol": "WEVER",
               "decimals": 9,
               "address": "",
               "icon": "",
