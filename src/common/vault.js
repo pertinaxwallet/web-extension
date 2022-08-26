@@ -15,7 +15,7 @@ export class Vault {
       }
     });
 
-    this.db = await openDB('vault', 5, {
+    this.db = await openDB('vault', 6, {
       async upgrade(db, oldVersion, newVersion, transaction) {
         if (await checkMigration(db, oldVersion, newVersion, transaction)) {
           return;
@@ -75,11 +75,7 @@ export class Vault {
             name: "Main",
             server: "main.everos.dev",
             explorer: "https://ever.live",
-            endpoints: ["https://eri01.main.everos.dev",
-                        "https://gra01.main.everos.dev",
-                        "https://gra02.main.everos.dev",
-                        "https://lim01.main.everos.dev",
-                        "https://rbx01.main.everos.dev"],
+            endpoints: ["https://mainnet.evercloud.dev/795876557a434c8387384f0172f6084a"],
             test: false,
             giver: "",
             coinName: "EVER",
@@ -90,9 +86,7 @@ export class Vault {
             name: "Test",
             server: "net.everos.dev",
             explorer: "https://net.ever.live",
-            endpoints: ["https://eri01.net.everos.dev",
-                        "https://rbx01.net.everos.dev",
-                        "https://gra01.net.everos.dev"],
+            endpoints: ["https://devnet.evercloud.dev/795876557a434c8387384f0172f6084a"],
             test: true,
             giver: "",
             coinName: "RUBY",
@@ -533,8 +527,8 @@ async function checkMigration(db, oldVersion, newVersion, transaction) {
 
     //copies the old main network and creates with the new server name
     const mainNetwork = await storeNetworks.get("main.ton.dev");
-    mainNetwork.server    = "main.everos.dev",
-    mainNetwork.explorer  = "https://ever.live",
+    mainNetwork.server    = "main.everos.dev";
+    mainNetwork.explorer  = "https://ever.live";
     mainNetwork.endpoints = ["https://eri01.main.everos.dev",
                             "https://gra01.main.everos.dev",
                             "https://gra02.main.everos.dev",
@@ -593,6 +587,27 @@ async function checkMigration(db, oldVersion, newVersion, transaction) {
       }
       await storeAccounts.put(allAccounts[i]);
     }
+
+    return true;
+  }
+
+  // change endpoints
+  if (oldVersion == 5 && newVersion == 6) {
+    const storeNetworks = transaction.objectStore('networks');
+
+    //copies the old main network and creates with the new server name
+    const mainNetwork = await storeNetworks.get("main.everos.dev");
+    mainNetwork.endpoints = ["https://mainnet.evercloud.dev/795876557a434c8387384f0172f6084a"];
+
+    await storeNetworks.put(mainNetwork);
+
+    //copies the old dev network and creates with the new server name
+    const devNetwork = await storeNetworks.get("net.everos.dev");
+
+    devNetwork.endpoints = [ "https://devnet.evercloud.dev/795876557a434c8387384f0172f6084a"];
+
+    //removes the dev network with the old server name
+    await storeNetworks.put(devNetwork);
 
     return true;
   }

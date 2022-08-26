@@ -65,8 +65,8 @@
   },
   "dependencies": {
     "@mdi/js": "^5.9.55",
-    "@eversdk/core": "^1.32.0",
-    "@eversdk/lib-web": "^1.32.0",
+    "@eversdk/core": "^1.37.0",
+    "@eversdk/lib-web": "^1.37.0",
     "bignumber.js": "^9.0.1",
     "chota": "^0.8.0",
     "eventemitter3": "^4.0.7",
